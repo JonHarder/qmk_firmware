@@ -316,8 +316,7 @@ struct adaptive_key adaptive_keys[] = {
 /* ADAPTIVE KEYS */
 bool process_adaptive_keys(uint16_t keycode, keyrecord_t *record) {
     // e.g. does the key still need processing?
-    bool return_state = true; // assume we didn't handle the key here.
-    /* uint16_t record_keycode = keycode; */
+    bool continue_processing = true; // assume we didn't handle the key here.
 
     if (record->event.pressed) {
         if ((timer_elapsed(prior_keydown) < ADAPTIVE_TERM)) {
@@ -328,21 +327,28 @@ bool process_adaptive_keys(uint16_t keycode, keyrecord_t *record) {
                 add_weak_mods(MOD_BIT(KC_LSFT));
             }
 
+	    // loop through all available adaptive key configuration
 	    for (int i=0; i<sizeof(adaptive_keys)/sizeof(struct adaptive_key); i++) {
-	      if (prior_keycode == adaptive_keys[i].prior_key) {
-		if (keycode == adaptive_keys[i].current_key) {
-		  // just add new_key1, e.g. simply replace the current keycode
-		  if (adaptive_keys[i].new_key2 == 0) {
-		    tap_code(adaptive_keys[i].new_key1);
-		  } else {
-		    // replace the prior key as well by backspacing and replacing both
-		    tap_code(KC_BSPC);
-		    tap_code(adaptive_keys[i].new_key1);
-		    tap_code(adaptive_keys[i].new_key2);
-		  }
-		  return_state = false;
-		  break;
+	      // if the previous key and current key match this adaptive key set:
+	      if (prior_keycode == adaptive_keys[i].prior_key && keycode == adaptive_keys[i].current_key) {
+		// some adaptive keys just send a different code for the given `keycode`. These adaptive
+		// keys will have their `new_key2` set to 0.
+		// This means we simply send an altered key instead of the one pressed (new_key1)
+		if (adaptive_keys[i].new_key2 == 0) {
+		  tap_code(adaptive_keys[i].new_key1);
+		} else {
+		  // Other adaptive keys replace the previous key AND the current key.
+		  // We know this by having an adaptive key record with a non-zero `new_key2`
+		  // In these instances, we delete the previous key and send both new keys
+		  // i.e. `new_key1` and `new_key2`.
+		  tap_code(KC_BSPC);
+		  tap_code(adaptive_keys[i].new_key1);
+		  tap_code(adaptive_keys[i].new_key2);
 		}
+		// in either case, we have processed this key and so we indicate to the caller
+		// that no further processing is needed.
+		continue_processing = false;
+		break;
 	      }
 	    }
             set_mods(saved_mods); // Restore mods
@@ -350,7 +356,7 @@ bool process_adaptive_keys(uint16_t keycode, keyrecord_t *record) {
         prior_keycode = keycode;      // this keycode is stripped of mods+taps
         prior_keydown = timer_read(); // (re)start prior_key timing
     }
-    return return_state;
+    return continue_processing;
 }
 /* END ADAPTIVE KEYS */
 
