@@ -69,6 +69,14 @@ enum combo_events {
 };
 uint16_t COMBO_LEN = COMBO_LENGTH;
 
+struct adaptive_key {
+  uint16_t prior_key;
+  uint16_t current_key;
+  uint16_t new_key1;
+  uint16_t new_key2;
+};
+
+
 // single lstter outputs
 const uint16_t PROGMEM combo_z[]   = {KC_P, KC_F, COMBO_END};
 const uint16_t PROGMEM combo_q[]   = {KC_Y, KC_B, COMBO_END};
@@ -293,6 +301,18 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
   }
 }
 
+
+struct adaptive_key adaptive_keys[] = {
+  {KC_G, KC_M, KC_L},       // G M -> G L
+  {KC_A, KC_H, KC_U},       // A H -> A U
+  {KC_U, KC_H, KC_A},       // U H -> U A
+  {KC_E, KC_H, KC_O},       // E H -> E O
+  {KC_O, KC_H, KC_E},       // O H -> O E
+  {KC_X, KC_M, KC_L, KC_M}, // X M -> L M
+  {KC_M, KC_G, KC_L, KC_G}  // M G -> L G
+};
+
+
 /* ADAPTIVE KEYS */
 bool process_adaptive_keys(uint16_t keycode, keyrecord_t *record) {
     // e.g. does the key still need processing?
@@ -307,75 +327,24 @@ bool process_adaptive_keys(uint16_t keycode, keyrecord_t *record) {
             if (is_caps_word_on()) {
                 add_weak_mods(MOD_BIT(KC_LSFT));
             }
-            switch (prior_keycode) {
-                case KC_G:
-                    switch (keycode) {
-                        // gm produces gl
-                        case KC_M:
-                            tap_code(KC_L);
-                            return_state = false;
-                            break;
-                    }
-                    break;
-                case KC_M:
-                    switch (keycode) {
-                        // mg produces lg
-                        case KC_G:
-                            tap_code(KC_BSPC);
-                            tap_code(KC_L);
-                            tap_code(KC_G);
-                            return_state = false;
-                            break;
-                    }
-                    break;
-                case KC_X:
-                    switch (keycode) {
-                        // xm produces lm
-                        case KC_M:
-                            tap_code(KC_BSPC);
-                            tap_code(KC_L);
-                            tap_code(KC_M);
-                            return_state = false;
-                            break;
-                    }
-                    break;
-                case KC_A:
-                    switch (keycode) {
-                        // ah produces au
-                        case KC_H:
-                            tap_code(KC_U);
-                            return_state = false;
-                            break;
-                    }
-                    break;
-                case KC_U:
-                    switch (keycode) {
-                        // uh produces ua
-                        case KC_H:
-                            tap_code(KC_A);
-                            return_state = false;
-                            break;
-                    }
-                    break;
-                case KC_E:
-                    switch (keycode) {
-                        // eh produces eo
-                        case KC_H:
-                            tap_code(KC_O);
-                            return_state = false;
-                            break;
-                    }
-                    break;
-                case KC_O:
-                    switch (keycode) {
-                        // oh produces oe
-                        case KC_H:
-                            tap_code(KC_E);
-                            return_state = false;
-                            break;
-                    }
-                    break;
-            }
+
+	    for (int i=0; i<sizeof(adaptive_keys)/sizeof(struct adaptive_key); i++) {
+	      if (prior_keycode == adaptive_keys[i].prior_key) {
+		if (keycode == adaptive_keys[i].current_key) {
+		  // just add new_key1, e.g. simply replace the current keycode
+		  if (adaptive_keys[i].new_key2 == 0) {
+		    tap_code(adaptive_keys[i].new_key1);
+		  } else {
+		    // replace the prior key as well by backspacing and replacing both
+		    tap_code(KC_BSPC);
+		    tap_code(adaptive_keys[i].new_key1);
+		    tap_code(adaptive_keys[i].new_key2);
+		  }
+		  return_state = false;
+		  break;
+		}
+	      }
+	    }
             set_mods(saved_mods); // Restore mods
         }
         prior_keycode = keycode;      // this keycode is stripped of mods+taps
@@ -387,8 +356,6 @@ bool process_adaptive_keys(uint16_t keycode, keyrecord_t *record) {
 
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  bool return_state = true;
-
   update_swapper(
       &sw_win_active, KC_LGUI, KC_TAB, SW_WIN,
       keycode, record
@@ -402,6 +369,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   update_oneshot(&os_ctrl_state, KC_LCTL, OS_CTRL, keycode, record);
   update_oneshot(&os_opt_state,  KC_LOPT, OS_OPT,  keycode, record);
   update_oneshot(&os_cmd_state,  KC_LCMD, OS_CMD,  keycode, record);
+
+  saved_mods =        get_mods();
+  bool return_state = true;
 
   if (!process_adaptive_keys(keycode, record)) {
     // This means we already took care of the key
@@ -483,7 +453,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         set_mods(saved_mods);
         return_state = false;
       }
-        break;
+      break;
     case KC_UNDS:
       if (saved_mods & MOD_MASK_SHIFT) {
         set_mods(saved_mods & ~MOD_MASK_SHIFT);
