@@ -172,6 +172,13 @@ uint16_t saved_mods;
 uint16_t prior_keycode = KC_NO; // for process_adaptive_key and process_caps_word
 uint16_t prior_keydown = 0;     // time since finished processing prior_keycode
 
+uint16_t linger_key = 0;
+uint32_t linger_timer = 0;
+
+
+#define register_linger_key(kc) {register_code16(kc); linger_key = kc; linger_timer = timer_read();}
+#define unregister_linger_key() {unregister_code16(linger_key); linger_key = 0;}
+
 /* END MOD STATE TRACKING */
 
 /* ONESHOT SETUP */
@@ -300,6 +307,42 @@ struct adaptive_key adaptive_keys[] = {
   // {KC_M, KC_G, KC_L, KC_G}  // M G -> L G
 };
 
+// Runs constantly in the background, in a loop
+void matrix_scan_user(void) {
+  if (linger_key && timer_elapsed(linger_timer) > LINGER_TIME) {
+    saved_mods = get_mods();
+    clear_mods();
+    unregister_mods(MOD_MASK_SHIFT);
+    switch(linger_key) {
+    case KC_Q:
+      tap_code(KC_U);
+      break;
+    case KC_LBRC:
+      tap_code(KC_RBRC);
+      tap_code(KC_LEFT);
+      break;
+    case KC_LCBR:
+      tap_code16(KC_RCBR);
+      tap_code(KC_LEFT);
+      break;
+    case KC_LPRN:
+      tap_code16(KC_RPRN);
+      tap_code(KC_LEFT);
+      break;
+    case KC_QUOT:
+      tap_code(KC_QUOT);
+      tap_code(KC_LEFT);
+      break;
+    case KC_DQUO:
+      tap_code16(KC_DQUO);
+      tap_code(KC_LEFT);
+    default:
+      break;
+    }
+    linger_timer = linger_key = 0; // done lingering
+    set_mods(saved_mods);
+  }
+}
 
 /* ADAPTIVE KEYS */
 bool process_adaptive_keys(uint16_t keycode, keyrecord_t *record) {
@@ -376,6 +419,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   if (record->event.pressed) {
     if (is_caps_word_on()) add_weak_mods(MOD_BIT(KC_LSFT));
     switch(keycode) {
+    case KC_Q:
+      register_linger_key(keycode);
+      return_state = false;
+      break;
+    case KC_LBRC:
+    case KC_LCBR:
+    case KC_LPRN:
+      register_linger_key(keycode);
+      return_state = false;
+      break;
     case KC_HASH:
       if (saved_mods & MOD_MASK_SHIFT) {
 	set_mods(saved_mods & ~MOD_MASK_SHIFT); // turn off shift
@@ -414,6 +467,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         tap_code16(KC_EXLM);
         set_mods(saved_mods);
         return_state = false;
+      } else {
+	// just a regular quote
+	register_linger_key(keycode);
+	return_state = false;
       }
       break;
     case KC_DQUO:
@@ -422,6 +479,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         tap_code16(KC_QUES);
         set_mods(saved_mods);
         return_state = false;
+      } else {
+	// just a regular double quote
+	register_linger_key(keycode);
+	return_state = false;
       }
       break;
     case KC_MINS:
@@ -459,7 +520,26 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     } // end switch (keycode)
     prior_keycode = keycode;
     prior_keydown = timer_read();
-  } // end if (record->event.pressed)
+  } else { // else branch of if (record->event.pressed)
+    switch(keycode) {
+    case KC_Q:
+      unregister_code16(keycode);
+      linger_key = 0;
+      return_state = false;
+      break;
+    case KC_LBRC:
+    case KC_LCBR:
+    case KC_LPRN:
+      unregister_linger_key();
+      return_state = false;
+      break;
+    case KC_QUOT:
+    case KC_DQUO:
+      unregister_linger_key();
+      return_state = false;
+      break;
+    }
+  } 
   return return_state;
 }
 

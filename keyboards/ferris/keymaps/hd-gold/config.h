@@ -33,10 +33,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define MOUSEKEY_WHEEL_TIME_TO_MAX 100
 
 // Pick good defaults for enabling homerow modifiers
-#define TAPPING_TERM 200
+#define TAPPING_TERM 145
+#define COMBO_TERM 85
 #define PERMISSIVE_HOLD
 #define QUICK_TAP_TERM 0
+#define LINGER_TIME TAPPING_TERM * 1.2
 
-#define ADAPTIVE_TERM 65
+#define ADAPTIVE_TERM 120
 
 #define EE_HANDS
