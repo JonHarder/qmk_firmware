@@ -320,6 +320,10 @@ void matrix_scan_user(void) {
     case KC_Q:
       tap_code(KC_U);
       break;
+    case KC_LT:
+      tap_code16(KC_GT);
+      tap_code(KC_LEFT);
+      break;
     case KC_LBRC:
       tap_code(KC_RBRC);
       tap_code(KC_LEFT);
@@ -432,6 +436,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       register_linger_key(keycode);
       return_state = false;
       break;
+    case KC_LT:
+      register_linger_key(keycode);
+      return_state = false;
+      break;
     case KC_HASH:
       if (saved_mods & MOD_MASK_SHIFT) {
 	set_mods(saved_mods & ~MOD_MASK_SHIFT); // turn off shift
@@ -528,6 +536,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case KC_Q:
       unregister_code16(keycode);
       linger_key = 0;
+      return_state = false;
+      break;
+    case KC_LT:
+      unregister_linger_key();
       return_state = false;
       break;
     case KC_LBRC:
