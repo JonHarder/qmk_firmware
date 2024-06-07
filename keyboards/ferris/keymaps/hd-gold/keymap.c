@@ -292,6 +292,7 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
 }
 
 
+
 struct adaptive_key adaptive_keys[] = {
   {KC_G, KC_M, KC_L},       // G M -> G L
   {KC_P, KC_M, KC_L},       // P M -> P L
@@ -299,6 +300,8 @@ struct adaptive_key adaptive_keys[] = {
   {KC_B, KC_D, KC_L},       // B D -> B L
   {KC_D, KC_B, KC_L, KC_B}, // D B -> L B
   {KC_A, KC_COMM, KC_U},    // A , -> A U
+  {KC_E, KC_H, KC_O},       // E H -> E O
+  {KC_U, KC_H, KC_A},       // U H -> U A
   // {KC_A, KC_H, KC_U},       // A H -> A U
   // {KC_U, KC_H, KC_A},       // U H -> U A
   // {KC_E, KC_H, KC_O},       // E H -> E O
