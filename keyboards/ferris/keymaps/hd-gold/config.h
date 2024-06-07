@@ -34,10 +34,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 // Pick good defaults for enabling homerow modifiers
 #define TAPPING_TERM 145
-#define COMBO_TERM 85
+#define COMBO_TERM 30
 #define PERMISSIVE_HOLD
 #define QUICK_TAP_TERM 0
-#define LINGER_TIME TAPPING_TERM * 1.2
+#define LINGER_TIME TAPPING_TERM * 1.1
 
 #define ADAPTIVE_TERM 120
 
