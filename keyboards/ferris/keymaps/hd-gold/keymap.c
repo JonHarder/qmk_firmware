@@ -302,7 +302,8 @@ struct adaptive_key adaptive_keys[] = {
   {KC_A, KC_COMM, KC_U},    // A , -> A U
   {KC_E, KC_H, KC_O},       // E H -> E O
   {KC_U, KC_H, KC_A},       // U H -> U A
-  {KC_J, KC_G, KC_G, KC_S}
+  {KC_J, KC_G, KC_G, KC_S},
+  {KC_O, KC_H, KC_E}
   // {KC_A, KC_H, KC_U},       // A H -> A U
   // {KC_U, KC_H, KC_A},       // U H -> U A
   // {KC_E, KC_H, KC_O},       // E H -> E O
