@@ -294,22 +294,16 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
 
 
 struct adaptive_key adaptive_keys[] = {
-  {KC_G, KC_M, KC_L},       // G M -> G L
-  {KC_P, KC_M, KC_L},       // P M -> P L
-  {KC_P, KC_V, KC_L, KC_V}, // P V -> L V
-  {KC_B, KC_D, KC_L},       // B D -> B L
-  {KC_D, KC_B, KC_L, KC_B}, // D B -> L B
-  {KC_A, KC_COMM, KC_U},    // A , -> A U
-  {KC_E, KC_H, KC_O},       // E H -> E O
-  {KC_U, KC_H, KC_A},       // U H -> U A
-  {KC_J, KC_G, KC_G, KC_S},
-  {KC_O, KC_H, KC_E}
-  // {KC_A, KC_H, KC_U},       // A H -> A U
-  // {KC_U, KC_H, KC_A},       // U H -> U A
-  // {KC_E, KC_H, KC_O},       // E H -> E O
-  // {KC_O, KC_H, KC_E},       // O H -> O E
-  // {KC_X, KC_M, KC_L, KC_M}, // X M -> L M
-  // {KC_M, KC_G, KC_L, KC_G}  // M G -> L G
+  {KC_G, KC_M, KC_L},       // GM -> GL
+  {KC_P, KC_M, KC_L},       // PM -> PL
+  {KC_P, KC_V, KC_L, KC_V}, // PV -> LV
+  {KC_B, KC_D, KC_L},       // BD -> BL
+  {KC_D, KC_B, KC_L, KC_B}, // DB -> LB
+  {KC_A, KC_COMM, KC_U},    // A, -> AU
+  {KC_E, KC_H, KC_O},       // EH -> EO
+  {KC_U, KC_H, KC_A},       // UH -> UA
+  {KC_J, KC_G, KC_G, KC_S}, // JG -> GS
+  {KC_O, KC_H, KC_E},       // OH -> OE
 };
 
 // Runs constantly in the background, in a loop
