@@ -88,6 +88,7 @@ const uint16_t PROGMEM combo_ch[]        = {KC_C, KC_L, COMBO_END};
 const uint16_t PROGMEM combo_sh[]        = {KC_S, KC_N, COMBO_END};
 const uint16_t PROGMEM combo_wh[]        = {KC_W, KC_C, COMBO_END};
 const uint16_t PROGMEM combo_ph[]        = {KC_P, KC_M, COMBO_END};
+const uint16_t PROGMEM combo_gh[]        = {KC_G, KC_M, COMBO_END};
 
 const uint16_t PROGMEM combo_cd[]        = {KC_C, KC_N, COMBO_END};
 // word combos
@@ -110,6 +111,7 @@ combo_t key_combos[] = {
     [COMBO_SH] = COMBO_ACTION(combo_sh),
     [COMBO_WH] = COMBO_ACTION(combo_wh),
     [COMBO_PH] = COMBO_ACTION(combo_ph),
+    [COMBO_GH] = COMBO_ACTION(combo_gh),
     [COMBO_CD] = COMBO_ACTION(combo_cd),
     // whole word combos
     [COMBO_THE] = COMBO_ACTION(combo_the),
@@ -286,6 +288,15 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
   case COMBO_PH:
     if (pressed) {
       tap_code(KC_P);
+      if (saved_mods & MOD_MASK_SHIFT) {
+	set_mods(saved_mods & ~MOD_MASK_SHIFT);
+      }
+      tap_code(KC_H);
+    }
+    break;
+  case COMBO_GH:
+    if (pressed) {
+      tap_code(KC_G);
       if (saved_mods & MOD_MASK_SHIFT) {
 	set_mods(saved_mods & ~MOD_MASK_SHIFT);
       }
