@@ -170,7 +170,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                 OS_CTRL,  OS_OPT,     OS_CMD,  OS_SHFT, KC_TRNS,     KC_TRNS,   KC_P4, KC_P5, KC_P6, KC_BSPC,
                 QK_BOOT,  KC_PDOT,    KC_MINS, KC_COLN, KC_TRNS,     KC_TRNS,   KC_P1, KC_P2, KC_P3, KC_P0,
                                                _______, _______,     _______, _______
-)               /*                             LA_NAV                         LA_SYM                            */
+        ),               /*                             LA_NAV                         LA_SYM                            */
+        [_OSH] = LAYOUT( /* [> One Shot Layer <] */
+          KC_NO,   KC_NO,   KC_NO,  KC_NO,   KC_NO,           KC_NO, KC_F7, KC_F8, KC_F9, KC_F12,
+          OS_CTRL, OS_OPT,  OS_CMD, OS_SHFT, KC_NO,           KC_NO, KC_F4, KC_F5, KC_F6, KC_F11,
+          KC_NO,   KC_NO,   KC_NO,  KC_NO,   KC_NO,           KC_NO, KC_F1, KC_F2, KC_F3, KC_F10,
+                                      _______, _______,          _______, _______
+        )
 };
 
 /* MOD STATE TRACKING */
