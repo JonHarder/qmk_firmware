@@ -116,8 +116,8 @@ combo_t key_combos[] = {
     // whole word combos
     [COMBO_THE] = COMBO_ACTION(combo_the),
     // quick access to symbols
-    [COMBO_COLON] = COMBO_ACTION(combo_colon),
-    [COMBO_QUEST] = COMBO_ACTION(combo_quest)
+    [COMBO_COLON] = COMBO(combo_colon, KC_COLON),
+    [COMBO_QUEST] = COMBO(combo_quest, KC_QUES)
 };
 
 /* ========= END COMBO EVENTS ================= */
@@ -230,87 +230,60 @@ bool is_oneshot_ignored_key(uint16_t keycode) {
 /* END ONSHOT SETUP */
 
 /* Process combo events */
+// TODO: caps words doesn't capitalize combos
 void process_combo_event(uint16_t combo_index, bool pressed) {
-  switch (combo_index) {
-  case COMBO_COLON:
-    if (pressed) {
-      tap_code16(KC_COLON);
-    }
-    break;
-  case COMBO_QUEST:
-    if (pressed) {
-      tap_code16(KC_QUES);
-    }
-    break;
-  case COMBO_THE:
-    if (pressed) {
+  if (pressed) {
+    switch (combo_index) {
+    case COMBO_THE:
       tap_code(KC_T);
-      if (saved_mods & MOD_MASK_SHIFT) {
-	set_mods(saved_mods & ~MOD_MASK_SHIFT);
+      if (!is_caps_word_on()) {
+	unregister_mods(MOD_MASK_SHIFT);
+      }
+      send_string("he");
+      break;
+    case COMBO_TH:
+      tap_code(KC_T);
+      if (is_caps_word_on()) {
+	unregister_mods(MOD_MASK_SHIFT);
       }
       tap_code(KC_H);
-      tap_code(KC_E);
-    }
-    break;
-  case COMBO_TH:
-    if (pressed) {
-      // if (is_caps_word_on()) {
-      //     set_mods(saved_mods 
-      // }
-      tap_code(KC_T);
-      if (saved_mods & MOD_MASK_SHIFT) {
-	set_mods(saved_mods & ~MOD_MASK_SHIFT);
-      }
-      tap_code(KC_H);
-    }
-    break;
-  case COMBO_CH:
-    if (pressed) {
+      break;
+    case COMBO_CH:
       tap_code(KC_C);
       if (saved_mods & MOD_MASK_SHIFT) {
 	set_mods(saved_mods & ~MOD_MASK_SHIFT);
       }
       tap_code(KC_H);
-    }
-    break;
-  case COMBO_SH:
-    if (pressed) {
+      break;
+    case COMBO_SH:
       tap_code(KC_S);
       if (saved_mods & MOD_MASK_SHIFT) {
 	set_mods(saved_mods & ~MOD_MASK_SHIFT);
       }
       tap_code(KC_H);
-    }
-    break;
-  case COMBO_WH:
-    if (pressed) {
+      break;
+    case COMBO_WH:
       tap_code(KC_W);
       if (saved_mods & MOD_MASK_SHIFT) {
 	set_mods(saved_mods & ~MOD_MASK_SHIFT);
       }
       tap_code(KC_H);
-    }
-    break;
-  case COMBO_PH:
-    if (pressed) {
+      break;
+    case COMBO_PH:
       tap_code(KC_P);
       if (saved_mods & MOD_MASK_SHIFT) {
 	set_mods(saved_mods & ~MOD_MASK_SHIFT);
       }
       tap_code(KC_H);
-    }
-    break;
-  case COMBO_GH:
-    if (pressed) {
+      break;
+    case COMBO_GH:
       tap_code(KC_G);
       if (saved_mods & MOD_MASK_SHIFT) {
 	set_mods(saved_mods & ~MOD_MASK_SHIFT);
       }
       tap_code(KC_H);
-    }
-    break;
-  case COMBO_CD:
-    if (pressed) {
+      break;
+    case COMBO_CD:
       tap_code(KC_C);
       if (saved_mods & MOD_MASK_SHIFT) {
 	set_mods(saved_mods & ~MOD_MASK_SHIFT);
