@@ -230,67 +230,74 @@ bool is_oneshot_ignored_key(uint16_t keycode) {
 /* END ONSHOT SETUP */
 
 /* Process combo events */
-// TODO: caps words doesn't capitalize combos
+// DONE: caps words doesn't capitalize combos
+// TODO: Seems like shifted combos are acting kinda funny now
 void process_combo_event(uint16_t combo_index, bool pressed) {
+  saved_mods = get_mods();
+  bool caps_on = is_caps_word_on();
+  if (is_caps_word_on()) {
+    register_mods(MOD_MASK_SHIFT);
+  }
   if (pressed) {
     switch (combo_index) {
     case COMBO_THE:
       tap_code(KC_T);
-      if (!is_caps_word_on()) {
+      if (saved_mods & MOD_MASK_SHIFT && !caps_on) {
 	unregister_mods(MOD_MASK_SHIFT);
       }
       send_string("he");
       break;
     case COMBO_TH:
       tap_code(KC_T);
-      if (is_caps_word_on()) {
+      if (saved_mods & MOD_MASK_SHIFT && !caps_on) {
 	unregister_mods(MOD_MASK_SHIFT);
       }
       tap_code(KC_H);
       break;
     case COMBO_CH:
       tap_code(KC_C);
-      if (saved_mods & MOD_MASK_SHIFT) {
-	set_mods(saved_mods & ~MOD_MASK_SHIFT);
+      if (saved_mods & MOD_MASK_SHIFT && !caps_on) {
+	unregister_mods(MOD_MASK_SHIFT);
       }
       tap_code(KC_H);
       break;
     case COMBO_SH:
       tap_code(KC_S);
-      if (saved_mods & MOD_MASK_SHIFT) {
-	set_mods(saved_mods & ~MOD_MASK_SHIFT);
+      if (saved_mods & MOD_MASK_SHIFT && !caps_on) {
+	unregister_mods(MOD_MASK_SHIFT);
       }
       tap_code(KC_H);
       break;
     case COMBO_WH:
       tap_code(KC_W);
-      if (saved_mods & MOD_MASK_SHIFT) {
-	set_mods(saved_mods & ~MOD_MASK_SHIFT);
+      if (saved_mods & MOD_MASK_SHIFT && !caps_on) {
+	unregister_mods(MOD_MASK_SHIFT);
       }
       tap_code(KC_H);
       break;
     case COMBO_PH:
       tap_code(KC_P);
-      if (saved_mods & MOD_MASK_SHIFT) {
-	set_mods(saved_mods & ~MOD_MASK_SHIFT);
+      if (saved_mods & MOD_MASK_SHIFT && !caps_on) {
+	unregister_mods(MOD_MASK_SHIFT);
       }
       tap_code(KC_H);
       break;
     case COMBO_GH:
       tap_code(KC_G);
-      if (saved_mods & MOD_MASK_SHIFT) {
-	set_mods(saved_mods & ~MOD_MASK_SHIFT);
+      if (saved_mods & MOD_MASK_SHIFT && !caps_on) {
+	unregister_mods(MOD_MASK_SHIFT);
       }
       tap_code(KC_H);
       break;
     case COMBO_CD:
       tap_code(KC_C);
-      if (saved_mods & MOD_MASK_SHIFT) {
-	set_mods(saved_mods & ~MOD_MASK_SHIFT);
+      if (saved_mods & MOD_MASK_SHIFT && !caps_on) {
+	unregister_mods(MOD_MASK_SHIFT);
       }
       tap_code(KC_D);
     }
   }
+  set_mods(saved_mods);
 }
 
 
