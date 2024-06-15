@@ -235,7 +235,7 @@ bool is_oneshot_ignored_key(uint16_t keycode) {
 void process_combo_event(uint16_t combo_index, bool pressed) {
   saved_mods = get_mods();
   bool caps_on = is_caps_word_on();
-  if (is_caps_word_on()) {
+  if (caps_on) {
     register_mods(MOD_MASK_SHIFT);
   }
   if (pressed) {
