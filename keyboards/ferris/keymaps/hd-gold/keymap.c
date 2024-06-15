@@ -231,7 +231,7 @@ bool is_oneshot_ignored_key(uint16_t keycode) {
 
 /* Process combo events */
 // DONE: caps words doesn't capitalize combos
-// TODO: Seems like shifted combos are acting kinda funny now
+// DONE: Seems like shifted combos are acting kinda funny now
 void process_combo_event(uint16_t combo_index, bool pressed) {
   saved_mods = get_mods();
   bool caps_on = is_caps_word_on();
@@ -297,7 +297,6 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
       tap_code(KC_D);
     }
   }
-  set_mods(saved_mods);
 }
 
 
