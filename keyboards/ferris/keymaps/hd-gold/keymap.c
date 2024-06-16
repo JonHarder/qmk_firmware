@@ -232,12 +232,12 @@ bool is_oneshot_ignored_key(uint16_t keycode) {
 /* Process combo events */
 // DONE: caps words doesn't capitalize combos
 // DONE: Seems like shifted combos are acting kinda funny now
+// TODO: Still seems like there's some bugs to work out.
+// ex. hit caps word, hit a combo, space, than any series of letters:
+// THIS IS The message that
 void process_combo_event(uint16_t combo_index, bool pressed) {
   saved_mods = get_mods();
   bool caps_on = is_caps_word_on();
-  if (caps_on) {
-    register_mods(MOD_MASK_SHIFT);
-  }
   if (pressed) {
     switch (combo_index) {
     case COMBO_THE:
