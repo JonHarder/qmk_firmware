@@ -2,6 +2,7 @@
 
 #include "oneshot.h"
 #include "swapper.h"
+#include "features/sentence_case.h"
 
 /* ====== Keybinding macros ===================*/
 // Layer shifts
@@ -421,6 +422,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
   saved_mods =        get_mods();
   bool return_state = true;
+
+  if (!process_sentence_case(keycode, record)) { return false; }
 
   if (!process_adaptive_keys(keycode, record)) {
     // This means we already took care of the key
