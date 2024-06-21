@@ -424,7 +424,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   update_oneshot(&os_opt_state,  KC_LOPT, OS_OPT,  keycode, record);
   update_oneshot(&os_cmd_state,  KC_LCMD, OS_CMD,  keycode, record);
 
-  saved_mods =        get_mods();
+  saved_mods =        get_mods() | get_oneshot_mods() | get_weak_mods();
   bool return_state = true;
 
   if (!process_sentence_case(keycode, record)) { return false; }
@@ -442,12 +442,36 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       register_linger_key(keycode);
       return_state = false;
       break;
-    case KC_LBRC:
-    case KC_LCBR:
     case KC_LPRN:
-      register_linger_key(keycode);
-      return_state = false;
+      // paren is supercharged here, handling left paren, left curly brace, and
+      // left (square) brace. KC_LPRN (no mods), KC_LCBR (shifted), and KC_LBRC (cmd-ed) respectively.
+      // We don't acually need to tap any of the keys however because of qmk magic.
+      // I wish I knew why this was the case....but hey, it works.
+      if (saved_mods & MOD_MASK_SHIFT) { // shift ( = {
+	unregister_mods(MOD_MASK_SG);
+	register_linger_key(KC_LCBR);
+	return_state = false;
+      } else if (saved_mods & MOD_MASK_GUI) { // cmd ( = [
+	unregister_mods(MOD_MASK_SG);
+	register_linger_key(KC_LBRC);
+	return_state = false;
+      } else {
+	register_linger_key(KC_LPRN);
+	return_state = false;
+      }
       break;
+    case KC_RPRN:
+      if (saved_mods & MOD_MASK_SHIFT) {
+	unregister_mods(MOD_MASK_SG);
+	tap_code16(KC_RCBR);
+	return_state = false;
+      } else if (saved_mods & MOD_MASK_GUI) {
+	unregister_mods(MOD_MASK_SG);
+	tap_code16(KC_RBRC);
+	return_state = false;
+      }
+      break;
+      // ( by itself is still (
     case KC_LT:
       register_linger_key(keycode);
       return_state = false;
