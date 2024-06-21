@@ -160,9 +160,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		/*                             LA_NAV                                                          */
 	),
 	[_SYM] = LAYOUT_split_3x5_2( /* Symbols */
-                KC_CIRC,   KC_LBRC,   KC_LCBR, KC_LPRN, KC_TILD,    KC_AMPR,  KC_RPRN, KC_RCBR,  KC_RBRC, KC_GRV,
-		KC_ASTR,   KC_MINS,   KC_EQL,  KC_GT,   KC_DLR,     KC_COLN,  OS_SHFT, OS_CMD,   OS_OPT,  OS_CTRL,
-		KC_AT,     KC_PIPE,   KC_HASH, KC_LT,   KC_PERC,    KC_PLUS,  KC_HOME, KC_END,   KC_CAPP, KC_BSLS,
+                KC_CIRC,   KC_PLUS,   KC_MINS, KC_GT,   KC_TILD,    KC_AMPR,  KC_NO,   KC_NO,    KC_NO,   KC_GRV,
+		KC_ASTR,   KC_EQL,    KC_LPRN, KC_RPRN, KC_DLR,     KC_COLN,  OS_SHFT, OS_CMD,   OS_OPT,  OS_CTRL,
+		KC_AT,     KC_PIPE,   KC_HASH, KC_LT,   KC_PERC,    KC_NO,    KC_HOME, KC_END,   KC_CAPP, KC_BSLS,
 		                               _______, KC_SPC,     _______, _______
 		/*                                                           LA_SYM                             */
         ),
