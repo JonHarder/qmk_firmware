@@ -59,10 +59,14 @@ enum combo_events {
     COMBO_CD,
     // word combos
     COMBO_THE,
+    COMBO_SCH,
 
     // quick access to symbols
     COMBO_COLON,
     COMBO_QUEST,
+    COMBO_ASTR,
+    COMBO_EXLM,
+    COMBO_AMPR,
 
     // macros
     COMBO_CAPS_WORD,
@@ -94,9 +98,13 @@ const uint16_t PROGMEM combo_gh[]        = {KC_G, KC_M, COMBO_END};
 const uint16_t PROGMEM combo_cd[]        = {KC_C, KC_N, COMBO_END};
 // word combos
 const uint16_t PROGMEM combo_the[]       = {KC_S, KC_N, KC_D, COMBO_END};
+const uint16_t PROGMEM combo_sch[]       = {KC_F, KC_L, KC_C, COMBO_END};
 // quick access to symbols
 const uint16_t PROGMEM combo_colon[]     = {KC_DOT, KC_SLSH, COMBO_END};
 const uint16_t PROGMEM combo_quest[]     = {KC_DOT, KC_DQUO, COMBO_END};
+const uint16_t PROGMEM combo_astr[]      = {KC_SLSH, KC_DQUO, COMBO_END};
+const uint16_t PROGMEM combo_exlm[]      = {KC_QUOT, KC_DQUO, COMBO_END};
+const uint16_t PROGMEM combo_ampr[]      = {KC_DOT, KC_QUOT, COMBO_END};
 // macros
 const uint16_t PROGMEM combo_caps_word[] = {KC_D, KC_A, COMBO_END};
 const uint16_t PROGMEM combo_esc[]       = {KC_R, KC_S, COMBO_END};
@@ -116,9 +124,14 @@ combo_t key_combos[] = {
     [COMBO_CD] = COMBO_ACTION(combo_cd),
     // whole word combos
     [COMBO_THE] = COMBO_ACTION(combo_the),
+    [COMBO_SCH] = COMBO_ACTION(combo_sch),
+
     // quick access to symbols
     [COMBO_COLON] = COMBO(combo_colon, KC_COLON),
-    [COMBO_QUEST] = COMBO(combo_quest, KC_QUES)
+    [COMBO_QUEST] = COMBO(combo_quest, KC_QUES),
+    [COMBO_ASTR]  = COMBO(combo_astr, KC_ASTR),
+    [COMBO_EXLM]  = COMBO(combo_exlm, KC_EXLM),
+    [COMBO_AMPR]  = COMBO(combo_ampr, KC_AMPR),
 };
 
 /* ========= END COMBO EVENTS ================= */
@@ -144,6 +157,7 @@ enum custom_keycodes {
 
 /* ====== LAYERS ============================*/
 enum ferris_layers { _BSE, _NAV, _SYM, _NUM, _OSH };
+
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         [_BSE] = LAYOUT_split_3x5_2( /* Base layer */
@@ -248,6 +262,13 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
 	unregister_mods(MOD_MASK_SHIFT);
       }
       send_string("he");
+      break;
+    case COMBO_SCH:
+      tap_code(KC_S);
+      if (shifted && !caps_on) {
+	unregister_mods(MOD_MASK_SHIFT);
+      }
+      send_string("ch");
       break;
     case COMBO_TH:
       tap_code(KC_T);
