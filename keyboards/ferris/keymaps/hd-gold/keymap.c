@@ -76,14 +76,22 @@ enum combo_events {
 uint16_t COMBO_LEN = COMBO_LENGTH;
 
 struct adaptive_key {
+  // The first key in the adaptive key series.
   uint16_t prior_key;
+  // The second key in the adaptiwe key series.
   uint16_t current_key;
+  // If there is no `new_key2`, than this key is simply
+  // emitted instead of `current_key`. e.g. 'p m' produces 'p l'.
   uint16_t new_key1;
+  // If provided, when the adaptive series is emitted, `prior_key`
+  // is deleted (`current_key` was never emitted, only sent to the board)
+  // then `new_key1` and `new_key2` are emitted.
+  // e.g. 'd b' produces '[bspc] l b' or just 'l b'
   uint16_t new_key2;
 };
 
 
-// single lstter outputs
+// single letter outputs
 const uint16_t PROGMEM combo_z[]         = {KC_J, KC_G, COMBO_END};
 const uint16_t PROGMEM combo_q[]         = {KC_G, KC_P, COMBO_END};
 // const uint16_t PROGMEM combo_repeat[] = {KC_C, KC_S, COMBO_END};
@@ -139,6 +147,8 @@ combo_t key_combos[] = {
 
 
 /* ======== Custom keycodes =================== */
+// TODO: refactor uses of COMBO_ACTION to just use custom
+// keycodes instead and process in `process_record_user`
 enum custom_keycodes {
   VRSN = SAFE_RANGE,
   M_THIS,
