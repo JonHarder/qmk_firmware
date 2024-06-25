@@ -48,6 +48,7 @@ enum combo_events {
     COMBO_Q,
     COMBO_ESC,
     COMBO_RET,
+    COMBO_DEL,
     // single letter outputs
     COMBO_REPEAT,
     // combo actions (multi-key combos)
@@ -118,6 +119,7 @@ const uint16_t PROGMEM combo_ampr[]      = {KC_DOT, KC_QUOT, COMBO_END};
 const uint16_t PROGMEM combo_caps_word[] = {KC_D, KC_A, COMBO_END};
 const uint16_t PROGMEM combo_esc[]       = {KC_R, KC_S, COMBO_END};
 const uint16_t PROGMEM combo_ret[]       = {KC_Y, KC_K, COMBO_END};
+const uint16_t PROGMEM combo_del[]       = {KC_I, KC_H, COMBO_END};
 
 combo_t key_combos[] = {
     [COMBO_Z] =          COMBO(combo_z, KC_Z),
@@ -125,6 +127,7 @@ combo_t key_combos[] = {
     [COMBO_CAPS_WORD] =  COMBO(combo_caps_word, CW_TOGG),
     [COMBO_ESC] =        COMBO(combo_esc, KC_ESC),
     [COMBO_RET] =        COMBO(combo_ret, KC_ENT),
+    [COMBO_DEL] =        COMBO(combo_del, KC_BSPC),
     /* [COMBO_DELW] = COMBO(combo_delw, BSWORD), */
     // combo actions
     [COMBO_TH] =         COMBO_ACTION(combo_th),
@@ -190,7 +193,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[_SYM] = LAYOUT_split_3x5_2( /* Symbols */
                 KC_CIRC,   KC_PERC,   KC_EQL,  KC_GT,   KC_TILD,    KC_NO,    KC_NO,   KC_NO,    KC_NO,   KC_GRV,
 		KC_MINS,   KC_PLUS,   KC_LPRN, KC_RPRN, KC_DLR,     KC_NO,    OS_SHFT, OS_CMD,   OS_OPT,  OS_CTRL,
-		KC_AT,     KC_PIPE,   KC_HASH, KC_LT,   KC_NO,      KC_NO,    KC_HOME, KC_END,   KC_CAPP, KC_BSLS,
+		KC_AT,     KC_PIPE,   KC_HASH, KC_LT,   KC_NO,      KC_NO,    KC_HOME, KC_END,   KC_CAPP, KC_NO,
 		                               _______, KC_SPC,     _______, _______
 		/*                                                           LA_SYM                             */
         ),
@@ -460,6 +463,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   update_oneshot(&os_cmd_state,  KC_LCMD, OS_CMD,  keycode, record);
 
   saved_mods =        get_mods() | get_oneshot_mods() | get_weak_mods();
+  bool shifted = saved_mods & MOD_MASK_SHIFT;
   bool return_state = true;
 
   if (!process_sentence_case(keycode, record)) { return false; }
@@ -479,15 +483,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       break;
     case KC_LPRN:
       // paren is supercharged here, handling left paren, left curly brace, and
-      // left (square) brace. KC_LPRN (no mods), KC_LCBR (shifted), and KC_LBRC (cmd-ed) respectively.
+      // left (square) brace. KC_LPRN (no mods), KC_LCBR (shifted), and KC_LBRC (alt-ed) respectively.
       // We don't acually need to tap any of the keys however because of qmk magic.
+      // We don't use cmd as a modifier for switching paren behavior so that it is still available for
+      // modded parans (cmd-{ specifically)
       // I wish I knew why this was the case....but hey, it works.
-      if (saved_mods & MOD_MASK_SHIFT) { // shift ( = {
-	unregister_mods(MOD_MASK_SG);
+      if (shifted) { // shift ( = {
+	unregister_mods(MOD_MASK_SA);
 	register_linger_key(KC_LCBR);
 	return_state = false;
-      } else if (saved_mods & MOD_MASK_GUI) { // cmd ( = [
-	unregister_mods(MOD_MASK_SG);
+      } else if (saved_mods & MOD_MASK_ALT) { // cmd ( = [
+	unregister_mods(MOD_MASK_SA);
 	register_linger_key(KC_LBRC);
 	return_state = false;
       } else {
@@ -496,12 +502,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       break;
     case KC_RPRN:
-      if (saved_mods & MOD_MASK_SHIFT) {
-	unregister_mods(MOD_MASK_SG);
+      if (shifted) {
+	unregister_mods(MOD_MASK_SA);
 	tap_code16(KC_RCBR);
 	return_state = false;
-      } else if (saved_mods & MOD_MASK_GUI) {
-	unregister_mods(MOD_MASK_SG);
+      } else if (saved_mods & MOD_MASK_ALT) {
+	unregister_mods(MOD_MASK_SA);
 	tap_code16(KC_RBRC);
 	return_state = false;
       }
@@ -511,88 +517,29 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       register_linger_key(keycode);
       return_state = false;
       break;
-    case KC_HASH:
-      if (saved_mods & MOD_MASK_SHIFT) {
-	set_mods(saved_mods & ~MOD_MASK_SHIFT); // turn off shift
-	tap_code16(KC_UNDS);
-	set_mods(saved_mods);
-	return_state = false;
-      }
-      break;
-    case KC_EQL:
-      if (saved_mods & MOD_MASK_SHIFT) {
-	set_mods(saved_mods & ~MOD_MASK_SHIFT);
-	tap_code16(KC_QUES);
-	set_mods(saved_mods);
-	return_state = false;
-      }
-      break;
-    case KC_DOT:
-      if (saved_mods & MOD_MASK_SHIFT) {
-        set_mods(saved_mods & ~MOD_MASK_SHIFT);
-        tap_code16(KC_COLN);
-        set_mods(saved_mods);
-        return_state = false;
-      }
-      break;
     case KC_SLSH:
-      if (saved_mods & MOD_MASK_SHIFT) {
+      if (shifted) {
         set_mods(saved_mods & ~MOD_MASK_SHIFT);
-        tap_code16(KC_ASTR);
+        tap_code16(KC_BSLS);
         set_mods(saved_mods);
         return_state = false;
       }
       break;
     case KC_QUOT:
-      if (saved_mods & MOD_MASK_SHIFT) {
-        set_mods(saved_mods & ~MOD_MASK_SHIFT);
-        tap_code16(KC_EXLM);
-        set_mods(saved_mods);
-        return_state = false;
-      } else {
-	// just a regular quote
-	register_linger_key(keycode);
-	return_state = false;
+      // just a regular quote
+      if (shifted) {
+	unregister_mods(MOD_MASK_SHIFT);
       }
+      register_linger_key(keycode);
+      return_state = false;
       break;
     case KC_DQUO:
-      if (saved_mods & MOD_MASK_SHIFT) {
-        set_mods(saved_mods & ~MOD_MASK_SHIFT);
-        tap_code16(KC_QUES);
-        set_mods(saved_mods);
-        return_state = false;
-      } else {
-	// just a regular double quote
-	register_linger_key(keycode);
-	return_state = false;
-      }
-      break;
-    case KC_MINS:
-      if (saved_mods & MOD_MASK_SHIFT) {
-        set_mods(saved_mods & ~MOD_MASK_SHIFT);
-        tap_code16(KC_PLUS);
-        set_mods(saved_mods);
-        return_state = false;
-      }
-      break;
-    case KC_COMM:
-      if (saved_mods & MOD_MASK_SHIFT) {
-        set_mods(saved_mods & ~MOD_MASK_SHIFT);
-        tap_code16(KC_EQL);
-        set_mods(saved_mods);
-        return_state = false;
-      }
-      break;
-    case KC_SCLN:
-      if (saved_mods & MOD_MASK_SHIFT) {
-        set_mods(saved_mods & ~MOD_MASK_SHIFT);
-        tap_code16(KC_PIPE);
-        set_mods(saved_mods);
-        return_state = false;
-      }
+      // just a regular double quote
+      register_linger_key(keycode);
+      return_state = false;
       break;
     case KC_UNDS:
-      if (saved_mods & MOD_MASK_SHIFT) {
+      if (shifted) {
         set_mods(saved_mods & ~MOD_MASK_SHIFT);
         tap_code16(KC_MINS);
         set_mods(saved_mods);
