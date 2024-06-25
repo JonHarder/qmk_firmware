@@ -47,6 +47,7 @@ enum combo_events {
     COMBO_Z,
     COMBO_Q,
     COMBO_ESC,
+    COMBO_RET,
     // single letter outputs
     COMBO_REPEAT,
     // combo actions (multi-key combos)
@@ -116,30 +117,33 @@ const uint16_t PROGMEM combo_ampr[]      = {KC_DOT, KC_QUOT, COMBO_END};
 // macros
 const uint16_t PROGMEM combo_caps_word[] = {KC_D, KC_A, COMBO_END};
 const uint16_t PROGMEM combo_esc[]       = {KC_R, KC_S, COMBO_END};
+const uint16_t PROGMEM combo_ret[]       = {KC_Y, KC_K, COMBO_END};
 
 combo_t key_combos[] = {
-    [COMBO_Z] = COMBO(combo_z, KC_Z),
-    [COMBO_Q] = COMBO(combo_q, KC_Q),
-    [COMBO_CAPS_WORD] = COMBO(combo_caps_word, CW_TOGG),
-    [COMBO_ESC] = COMBO(combo_esc, KC_ESC),
+    [COMBO_Z] =          COMBO(combo_z, KC_Z),
+    [COMBO_Q] =          COMBO(combo_q, KC_Q),
+    [COMBO_CAPS_WORD] =  COMBO(combo_caps_word, CW_TOGG),
+    [COMBO_ESC] =        COMBO(combo_esc, KC_ESC),
+    [COMBO_RET] =        COMBO(combo_ret, KC_ENT),
+    /* [COMBO_DELW] = COMBO(combo_delw, BSWORD), */
     // combo actions
-    [COMBO_TH] = COMBO_ACTION(combo_th),
-    [COMBO_CH] = COMBO_ACTION(combo_ch),
-    [COMBO_SH] = COMBO_ACTION(combo_sh),
-    [COMBO_WH] = COMBO_ACTION(combo_wh),
-    [COMBO_PH] = COMBO_ACTION(combo_ph),
-    [COMBO_GH] = COMBO_ACTION(combo_gh),
-    [COMBO_CD] = COMBO_ACTION(combo_cd),
+    [COMBO_TH] =         COMBO_ACTION(combo_th),
+    [COMBO_CH] =         COMBO_ACTION(combo_ch),
+    [COMBO_SH] =         COMBO_ACTION(combo_sh),
+    [COMBO_WH] =         COMBO_ACTION(combo_wh),
+    [COMBO_PH] =         COMBO_ACTION(combo_ph),
+    [COMBO_GH] =         COMBO_ACTION(combo_gh),
+    [COMBO_CD] =         COMBO_ACTION(combo_cd),
     // whole word combos
-    [COMBO_THE] = COMBO_ACTION(combo_the),
-    [COMBO_SCH] = COMBO_ACTION(combo_sch),
+    [COMBO_THE] =        COMBO_ACTION(combo_the),
+    [COMBO_SCH] =        COMBO_ACTION(combo_sch),
 
     // quick access to symbols
-    [COMBO_COLON] = COMBO(combo_colon, KC_COLON),
-    [COMBO_QUEST] = COMBO(combo_quest, KC_QUES),
-    [COMBO_ASTR]  = COMBO(combo_astr, KC_ASTR),
-    [COMBO_EXLM]  = COMBO(combo_exlm, KC_EXLM),
-    [COMBO_AMPR]  = COMBO(combo_ampr, KC_AMPR),
+    [COMBO_COLON] =      COMBO(combo_colon, KC_COLON),
+    [COMBO_QUEST] =      COMBO(combo_quest, KC_QUES),
+    [COMBO_ASTR]  =      COMBO(combo_astr, KC_ASTR),
+    [COMBO_EXLM]  =      COMBO(combo_exlm, KC_EXLM),
+    [COMBO_AMPR]  =      COMBO(combo_ampr, KC_AMPR),
 };
 
 /* ========= END COMBO EVENTS ================= */
@@ -177,9 +181,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		                               LA_NAV,  KC_T,       KC_SPC,   LA_SYM
 	),
 	[_NAV] = LAYOUT_split_3x5_2( /* Navigation */
-		SW_WIN,    C(KC_SPC), KC_MPRV, KC_MNXT, KC_VOLU,    AM_WLEFT, DK_LEFT, DK_RIGHT, AM_WRIGHT, BSWORD,
+		SW_WIN,    C(KC_SPC), KC_MPRV, KC_MNXT, KC_VOLU,    AM_WLEFT, DK_LEFT, DK_RIGHT, AM_WRIGHT, KC_NO,
 		OS_CTRL,   OS_OPT,    OS_CMD,  OS_SHFT, KC_VOLD,    KC_LEFT,  KC_DOWN, KC_UP,    KC_RGHT,   KC_BSPC,
-		OSL(_OSH), COPY,      PASTE,   C(KC_C), KC_MPLY,    AM_LEFT,  AM_NEXT, AM_PREV,  AM_RIGHT,  KC_ENT,
+		OSL(_OSH), COPY,      PASTE,   C(KC_C), KC_MPLY,    AM_LEFT,  AM_NEXT, AM_PREV,  AM_RIGHT,  KC_NO,
 		                               _______, _______,    KC_TAB,   _______
 		/*                             LA_NAV                                                          */
 	),
