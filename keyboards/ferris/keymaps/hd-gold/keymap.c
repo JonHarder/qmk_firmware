@@ -184,16 +184,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		                               LA_NAV,  KC_T,       KC_SPC,   LA_SYM
 	),
 	[_NAV] = LAYOUT_split_3x5_2( /* Navigation */
-		SW_WIN,    C(KC_SPC), KC_MPRV, KC_MNXT, KC_VOLU,    AM_WLEFT, DK_LEFT, DK_RIGHT, AM_WRIGHT, KC_NO,
+		SW_WIN,    C(KC_SPC), KC_MPRV, KC_MNXT, KC_VOLU,    AM_WLEFT, DK_LEFT, DK_RIGHT, AM_WRIGHT, BSWORD,
 		OS_CTRL,   OS_OPT,    OS_CMD,  OS_SHFT, KC_VOLD,    KC_LEFT,  KC_DOWN, KC_UP,    KC_RGHT,   KC_BSPC,
 		OSL(_OSH), COPY,      PASTE,   C(KC_C), KC_MPLY,    AM_LEFT,  AM_NEXT, AM_PREV,  AM_RIGHT,  KC_NO,
 		                               _______, _______,    KC_TAB,   _______
 		/*                             LA_NAV                                                          */
 	),
 	[_SYM] = LAYOUT_split_3x5_2( /* Symbols */
-                KC_CIRC,   KC_PERC,   KC_EQL,  KC_GT,   KC_TILD,    KC_NO,    KC_NO,   KC_NO,    KC_NO,   KC_GRV,
+                KC_CIRC,   KC_PERC,   KC_EQL,  KC_GT,   KC_TILD,    KC_NO,    KC_NO,   KC_NO,    KC_NO,   KC_NO,
 		KC_MINS,   KC_PLUS,   KC_LPRN, KC_RPRN, KC_DLR,     KC_NO,    OS_SHFT, OS_CMD,   OS_OPT,  OS_CTRL,
-		KC_AT,     KC_PIPE,   KC_HASH, KC_LT,   KC_NO,      KC_NO,    KC_HOME, KC_END,   KC_CAPP, KC_NO,
+		KC_AT,     KC_PIPE,   KC_HASH, KC_LT,   KC_GRV,     KC_NO,    KC_HOME, KC_END,   KC_CAPP, KC_NO,
 		                               _______, KC_SPC,     _______, _______
 		/*                                                           LA_SYM                             */
         ),
@@ -372,6 +372,10 @@ void matrix_scan_user(void) {
       tap_code16(KC_GT);
       tap_code(KC_LEFT);
       break;
+    case KC_GRV:
+      tap_code(KC_GRV);
+      tap_code(KC_GRV);
+      break;
     case KC_LBRC:
       tap_code(KC_RBRC);
       tap_code(KC_LEFT);
@@ -512,6 +516,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 	return_state = false;
       }
       break;
+    case KC_GRV:
+      register_linger_key(KC_GRV);
+      return_state = false;
+      break;
       // ( by itself is still (
     case KC_LT:
       register_linger_key(keycode);
@@ -557,6 +565,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       return_state = false;
       break;
     case KC_LT:
+      unregister_linger_key();
+      return_state = false;
+      break;
+    case KC_GRV:
       unregister_linger_key();
       return_state = false;
       break;
