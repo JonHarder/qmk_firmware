@@ -278,7 +278,7 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
       if (shifted && !caps_on) {
 	unregister_mods(MOD_MASK_SHIFT);
       }
-      send_string("he");
+      send_string("he ");
       break;
     case COMBO_SCH:
       tap_code(KC_S);
