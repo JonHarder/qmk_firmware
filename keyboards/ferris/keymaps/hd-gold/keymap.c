@@ -61,6 +61,7 @@ enum combo_events {
     COMBO_CD,
     // word combos
     COMBO_THE,
+    COMBO_AND,
     COMBO_SCH,
 
     // quick access to symbols
@@ -108,6 +109,7 @@ const uint16_t PROGMEM combo_gh[]        = {KC_G, KC_M, COMBO_END};
 const uint16_t PROGMEM combo_cd[]        = {KC_C, KC_N, COMBO_END};
 // word combos
 const uint16_t PROGMEM combo_the[]       = {KC_S, KC_N, KC_D, COMBO_END};
+const uint16_t PROGMEM combo_and[]       = {KC_A, KC_E, KC_I, COMBO_END};
 const uint16_t PROGMEM combo_sch[]       = {KC_F, KC_L, KC_C, COMBO_END};
 // quick access to symbols
 const uint16_t PROGMEM combo_colon[]     = {KC_DOT, KC_SLSH, COMBO_END};
@@ -139,6 +141,7 @@ combo_t key_combos[] = {
     [COMBO_CD] =         COMBO_ACTION(combo_cd),
     // whole word combos
     [COMBO_THE] =        COMBO_ACTION(combo_the),
+    [COMBO_AND] =        COMBO_ACTION(combo_and),
     [COMBO_SCH] =        COMBO_ACTION(combo_sch),
 
     // quick access to symbols
@@ -279,6 +282,13 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
 	unregister_mods(MOD_MASK_SHIFT);
       }
       send_string("he ");
+      break;
+    case COMBO_AND:
+      tap_code(KC_A);
+      if (shifted && !caps_on) {
+	unregister_mods(MOD_MASK_SHIFT);
+      }
+      send_string("nd ");
       break;
     case COMBO_SCH:
       tap_code(KC_S);
