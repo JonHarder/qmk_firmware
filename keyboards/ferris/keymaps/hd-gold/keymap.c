@@ -263,10 +263,12 @@ bool is_oneshot_ignored_key(uint16_t keycode) {
 }
 
 /* END ONSHOT SETUP */
+bool semantic_shift = false;
+void sentence_case_primed(bool primed) {
+  semantic_shift = primed;
+}
 
 /* Process combo events */
-// TODO: combos don't fire cleanly with semantic case
-// ex. Here is some text. thIs should have been capitalized.
 void process_combo_event(uint16_t combo_index, bool pressed) {
   saved_mods = get_mods() | get_weak_mods() | get_oneshot_mods();
   bool caps_on = is_caps_word_on();
@@ -274,6 +276,11 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
     register_mods(MOD_MASK_SHIFT);
   }
   bool shifted = saved_mods & MOD_MASK_SHIFT;
+  if (semantic_shift) {
+    shifted = true;
+    register_mods(MOD_MASK_SHIFT);
+    sentence_case_clear();
+  }
   if (pressed) {
     switch (combo_index) {
     case COMBO_THE:
