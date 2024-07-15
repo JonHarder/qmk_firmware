@@ -63,6 +63,7 @@ enum combo_events {
     COMBO_THE,
     COMBO_AND,
     COMBO_SCH,
+    COMBO_DCOM, // sends .com
 
     // quick access to symbols
     COMBO_COLON,
@@ -111,6 +112,7 @@ const uint16_t PROGMEM combo_cd[]        = {KC_C, KC_N, COMBO_END};
 const uint16_t PROGMEM combo_the[]       = {KC_S, KC_N, KC_D, COMBO_END};
 const uint16_t PROGMEM combo_and[]       = {KC_A, KC_E, KC_I, COMBO_END};
 const uint16_t PROGMEM combo_sch[]       = {KC_F, KC_L, KC_C, COMBO_END};
+const uint16_t PROGMEM combo_dotcom[]    = {KC_DOT, KC_SLSH, KC_DQUO, COMBO_END};
 // quick access to symbols
 const uint16_t PROGMEM combo_colon[]     = {KC_DOT, KC_SLSH, COMBO_END};
 const uint16_t PROGMEM combo_quest[]     = {KC_DOT, KC_DQUO, COMBO_END};
@@ -121,7 +123,7 @@ const uint16_t PROGMEM combo_ampr[]      = {KC_DOT, KC_QUOT, COMBO_END};
 const uint16_t PROGMEM combo_caps_word[] = {KC_D, KC_A, COMBO_END};
 const uint16_t PROGMEM combo_esc[]       = {KC_R, KC_S, COMBO_END};
 const uint16_t PROGMEM combo_ret[]       = {KC_Y, KC_K, COMBO_END};
-const uint16_t PROGMEM combo_del[]       = {KC_I, KC_H, COMBO_END};
+const uint16_t PROGMEM combo_del[]       = {KC_A, KC_I, COMBO_END};
 
 combo_t key_combos[] = {
     [COMBO_Z] =          COMBO(combo_z, KC_Z),
@@ -143,6 +145,7 @@ combo_t key_combos[] = {
     [COMBO_THE] =        COMBO_ACTION(combo_the),
     [COMBO_AND] =        COMBO_ACTION(combo_and),
     [COMBO_SCH] =        COMBO_ACTION(combo_sch),
+    [COMBO_DCOM] =       COMBO_ACTION(combo_dotcom),
 
     // quick access to symbols
     [COMBO_COLON] =      COMBO(combo_colon, KC_COLON),
@@ -187,8 +190,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		                               LA_NAV,  KC_T,       KC_SPC,   LA_SYM
 	),
 	[_NAV] = LAYOUT_split_3x5_2( /* Navigation */
-		SW_WIN,    C(KC_SPC), KC_MPRV, KC_MNXT, KC_VOLU,    AM_WLEFT, DK_LEFT, DK_RIGHT, AM_WRIGHT, BSWORD,
-		OS_CTRL,   OS_OPT,    OS_CMD,  OS_SHFT, KC_VOLD,    KC_LEFT,  KC_DOWN, KC_UP,    KC_RGHT,   KC_BSPC,
+		SW_WIN,    C(KC_SPC), KC_MPRV, KC_MNXT, KC_VOLU,    AM_WLEFT, DK_LEFT, DK_RIGHT, AM_WRIGHT, KC_NO,
+		OS_CTRL,   OS_OPT,    OS_CMD,  OS_SHFT, KC_VOLD,    KC_LEFT,  KC_DOWN, KC_UP,    KC_RGHT,   BSWORD,
 		OSL(_OSH), COPY,      PASTE,   C(KC_C), KC_MPLY,    AM_LEFT,  AM_NEXT, AM_PREV,  AM_RIGHT,  KC_NO,
 		                               _______, _______,    KC_TAB,   _______
 		/*                             LA_NAV                                                          */
@@ -283,6 +286,10 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
   }
   if (pressed) {
     switch (combo_index) {
+    case COMBO_DCOM:
+      unregister_mods(MOD_MASK_SHIFT);
+      send_string(".com");
+      break;
     case COMBO_THE:
       tap_code(KC_T);
       if (shifted && !caps_on) {
@@ -376,6 +383,7 @@ struct adaptive_key adaptive_keys[] = {
 };
 
 // Runs constantly in the background, in a loop
+// primarily used to handle linger keys.
 void matrix_scan_user(void) {
   if (linger_key && timer_elapsed(linger_timer) > LINGER_TIME) {
     saved_mods = get_mods();
@@ -478,6 +486,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       keycode, record
   );
 
+  // FIXME: seems to be a bug somewhere in here. When typing quickly,
+  // the second letter of typed will often get capitalized as well as
+  // the first.
+  // https://github.com/qmk/qmk_firmware/pull/16174/files#diff-672a8ea472d262ce7418eb0f66ff85de34f764b9725e4da8d9b98e1cccaf0a16R23
+  // this implementation claims to have resolved those issues. Maybe switch
+  // to this instead?
   update_oneshot(&os_shft_state, KC_LSFT, OS_SHFT, keycode, record);
   update_oneshot(&os_ctrl_state, KC_LCTL, OS_CTRL, keycode, record);
   update_oneshot(&os_opt_state,  KC_LOPT, OS_OPT,  keycode, record);
