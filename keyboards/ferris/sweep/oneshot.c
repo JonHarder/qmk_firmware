@@ -1,11 +1,11 @@
 #include "oneshot.h"
 
 void update_oneshot(
-    oneshot_state *state,
-    uint16_t mod,
-    uint16_t trigger,
-    uint16_t keycode,
-    keyrecord_t *record
+    oneshot_state *state, // the state of the oneshot struct for the mod
+    uint16_t mod,         // the KC mod in question (KC_LSFT, KC_LCTRL, etc)
+    uint16_t trigger,     // the key that triggers the oneshot. OS_SHFT, OS_CTRL, etc
+    uint16_t keycode,     // the key that was actually pressed by the user.
+    keyrecord_t *record   // information about the key
 ) {
     if (keycode == trigger) {
         if (record->event.pressed) {
@@ -30,7 +30,7 @@ void update_oneshot(
                 break;
             }
         }
-    } else {
+    } else { // keycode != trigger
         if (record->event.pressed) {
             if (is_oneshot_cancel_key(keycode) && *state != os_up_unqueued) {
                 // Cancel oneshot on designated cancel keydown.
@@ -50,7 +50,7 @@ void update_oneshot(
                     break;
                 }
             }
-        } else {
+        } else { // not pressed
             if (!is_oneshot_ignored_key(keycode)) {
                 // On non-ignored keyup, consider the oneshot used.
                 switch (*state) {

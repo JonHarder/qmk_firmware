@@ -4,11 +4,11 @@
 
 // Represents the four states a oneshot key can be in
 typedef enum {
-    os_up_unqueued,
-    os_up_queued,
-    os_up_queued_used,
-    os_down_unused,
-    os_down_used,
+  os_up_unqueued, // default resting state for a oneshot. Not used, not queued.
+  os_up_queued, // trigger has been pressed and released. It will be saved until the next non-trigger keycode
+  os_up_queued_used, // we queued it, then used it. It's spent
+  os_down_unused, // 
+  os_down_used, // the trigger and a keycode was used, meaning we don't want this mod queued anymore, it's been used/spent.
 } oneshot_state;
 
 // Custom oneshot mod implementation that doesn't rely on timers. If a mod is
