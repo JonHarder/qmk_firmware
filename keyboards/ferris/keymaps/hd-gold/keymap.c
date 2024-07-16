@@ -123,7 +123,6 @@ const uint16_t PROGMEM combo_ampr[]      = {KC_DOT, KC_QUOT, COMBO_END};
 const uint16_t PROGMEM combo_caps_word[] = {KC_D, KC_A, COMBO_END};
 const uint16_t PROGMEM combo_esc[]       = {KC_R, KC_S, COMBO_END};
 const uint16_t PROGMEM combo_ret[]       = {KC_Y, KC_K, COMBO_END};
-const uint16_t PROGMEM combo_del[]       = {KC_A, KC_I, COMBO_END};
 
 combo_t key_combos[] = {
     [COMBO_Z] =          COMBO(combo_z, KC_Z),
@@ -131,8 +130,6 @@ combo_t key_combos[] = {
     [COMBO_CAPS_WORD] =  COMBO(combo_caps_word, CW_TOGG),
     [COMBO_ESC] =        COMBO(combo_esc, KC_ESC),
     [COMBO_RET] =        COMBO(combo_ret, KC_ENT),
-    [COMBO_DEL] =        COMBO(combo_del, KC_BSPC),
-    /* [COMBO_DELW] = COMBO(combo_delw, BSWORD), */
     // combo actions
     [COMBO_TH] =         COMBO_ACTION(combo_th),
     [COMBO_CH] =         COMBO_ACTION(combo_ch),
@@ -191,8 +188,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	),
 	[_NAV] = LAYOUT_split_3x5_2( /* Navigation */
 		SW_WIN,    C(KC_SPC), KC_MPRV, KC_MNXT, KC_VOLU,    AM_WLEFT, DK_LEFT, DK_RIGHT, AM_WRIGHT, KC_NO,
-		OS_CTRL,   OS_OPT,    OS_CMD,  OS_SHFT, KC_VOLD,    KC_LEFT,  KC_DOWN, KC_UP,    KC_RGHT,   BSWORD,
-		OSL(_OSH), COPY,      PASTE,   C(KC_C), KC_MPLY,    AM_LEFT,  AM_NEXT, AM_PREV,  AM_RIGHT,  KC_NO,
+		OS_CTRL,   OS_OPT,    OS_CMD,  OS_SHFT, KC_VOLD,    KC_LEFT,  KC_DOWN, KC_UP,    KC_RGHT,   KC_BSPC,
+		OSL(_OSH), COPY,      PASTE,   C(KC_C), KC_MPLY,    AM_LEFT,  AM_NEXT, AM_PREV,  AM_RIGHT,  BSWORD,
 		                               _______, _______,    KC_TAB,   _______
 		/*                             LA_NAV                                                          */
 	),
