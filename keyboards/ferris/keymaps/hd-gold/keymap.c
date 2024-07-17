@@ -397,6 +397,12 @@ void matrix_scan_user(void) {
     case KC_GRV:
       tap_code(KC_GRV);
       tap_code(KC_GRV);
+      tap_code(KC_ENTER);
+      tap_code(KC_ENTER);
+      tap_code(KC_GRV);
+      tap_code(KC_GRV);
+      tap_code(KC_GRV);
+      tap_code(KC_UP);
       break;
     case KC_LBRC:
       tap_code(KC_RBRC);
