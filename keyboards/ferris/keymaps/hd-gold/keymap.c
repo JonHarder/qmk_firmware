@@ -101,9 +101,9 @@ const uint16_t PROGMEM combo_q[]         = {KC_G, KC_P, COMBO_END};
 // const uint16_t PROGMEM combo_repeat[] = {KC_C, KC_S, COMBO_END};
 // Common H digraphs
 const uint16_t PROGMEM combo_th[]        = {KC_D, KC_N, COMBO_END};
-const uint16_t PROGMEM combo_ch[]        = {KC_C, KC_L, COMBO_END};
+const uint16_t PROGMEM combo_ch[]        = {KC_S, KC_D, COMBO_END};
 const uint16_t PROGMEM combo_sh[]        = {KC_S, KC_N, COMBO_END};
-const uint16_t PROGMEM combo_wh[]        = {KC_W, KC_C, COMBO_END};
+const uint16_t PROGMEM combo_wh[]        = {KC_L, KC_C, COMBO_END};
 const uint16_t PROGMEM combo_ph[]        = {KC_P, KC_M, COMBO_END};
 const uint16_t PROGMEM combo_gh[]        = {KC_G, KC_M, COMBO_END};
 
