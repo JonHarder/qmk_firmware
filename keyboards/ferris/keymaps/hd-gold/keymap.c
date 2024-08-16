@@ -46,6 +46,7 @@
 enum combo_events {
     COMBO_Z,
     COMBO_Q,
+    COMBO_QU,
     COMBO_ESC,
     COMBO_RET,
     COMBO_DEL,
@@ -98,7 +99,8 @@ struct adaptive_key {
 
 // single letter outputs
 const uint16_t PROGMEM combo_z[]         = {KC_J, KC_G, COMBO_END};
-const uint16_t PROGMEM combo_q[]         = {KC_G, KC_P, COMBO_END};
+const uint16_t PROGMEM combo_q[]         = {KC_J, KC_P, COMBO_END};
+const uint16_t PROGMEM combo_qu[]        = {KC_G, KC_P, COMBO_END};
 // const uint16_t PROGMEM combo_repeat[] = {KC_C, KC_S, COMBO_END};
 // Common H digraphs
 const uint16_t PROGMEM combo_th[]        = {KC_D, KC_N, COMBO_END};
@@ -129,6 +131,7 @@ const uint16_t PROGMEM combo_ret[]       = {KC_Y, KC_K, COMBO_END};
 combo_t key_combos[] = {
     [COMBO_Z] =          COMBO(combo_z, KC_Z),
     [COMBO_Q] =          COMBO(combo_q, KC_Q),
+    [COMBO_QU] =         COMBO_ACTION(combo_qu),
     [COMBO_CAPS_WORD] =  COMBO(combo_caps_word, CW_TOGG),
     [COMBO_ESC] =        COMBO(combo_esc, KC_ESC),
     [COMBO_RET] =        COMBO(combo_ret, KC_ENT),
@@ -290,6 +293,13 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
       unregister_mods(MOD_MASK_SHIFT);
       send_string(".com");
       break;
+    case COMBO_QU:
+      tap_code(KC_Q);
+      if(shifted && !caps_on) {
+	unregister_mods(MOD_MASK_SHIFT);
+      }
+      tap_code(KC_U);
+      break;
     case COMBO_TF:
       send_string("terraform");
       break;
@@ -393,9 +403,9 @@ void matrix_scan_user(void) {
     clear_mods();
     unregister_mods(MOD_MASK_SHIFT);
     switch(linger_key) {
-    case KC_Q:
-      tap_code(KC_U);
-      break;
+    /* case KC_Q: */
+    /*   tap_code(KC_U); */
+    /*   break; */
     case KC_LT:
       tap_code16(KC_GT);
       tap_code(KC_LEFT);
@@ -521,10 +531,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   if (record->event.pressed) {
     if (is_caps_word_on()) add_weak_mods(MOD_BIT(KC_LSFT));
     switch(keycode) {
-    case KC_Q:
-      register_linger_key(keycode);
-      return_state = false;
-      break;
+    /* case KC_Q: */
+    /*   register_linger_key(keycode); */
+    /*   return_state = false; */
+    /*   break; */
     case KC_LPRN:
       // paren is supercharged here, handling left paren, left curly brace, and
       // left (square) brace. KC_LPRN (no mods), KC_LCBR (shifted), and KC_LBRC (alt-ed) respectively.
@@ -599,11 +609,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     prior_keydown = timer_read();
   } else { // else branch of if (record->event.pressed)
     switch(keycode) {
-    case KC_Q:
-      unregister_code16(keycode);
-      linger_key = 0;
-      return_state = false;
-      break;
+    /* case KC_Q: */
+    /*   unregister_code16(keycode); */
+    /*   linger_key = 0; */
+    /*   return_state = false; */
+    /*   break; */
     case KC_LT:
       unregister_linger_key();
       return_state = false;
