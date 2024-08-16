@@ -304,7 +304,12 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
       tap_code(KC_U);
       break;
     case COMBO_TF:
-      send_string("terraform");
+      tap_code(KC_T);
+      if (shifted && !caps_on) {
+	unregister_mods(MOD_MASK_SHIFT);
+      }
+      send_string("erraform");
+      break;
     case COMBO_CAP_I:
       send_string("I ");
       break;
