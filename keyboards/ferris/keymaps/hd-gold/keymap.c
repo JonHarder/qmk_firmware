@@ -66,6 +66,7 @@ enum combo_events {
     COMBO_SCH,
     COMBO_DCOM, // sends .com
     COMBO_TF, // sends "terraform"
+    COMBO_CAP_I,
 
     // quick access to symbols
     COMBO_COLON,
@@ -117,6 +118,7 @@ const uint16_t PROGMEM combo_and[]       = {KC_A, KC_E, KC_I, COMBO_END};
 const uint16_t PROGMEM combo_sch[]       = {KC_F, KC_L, KC_C, COMBO_END};
 const uint16_t PROGMEM combo_dotcom[]    = {KC_DOT, KC_SLSH, KC_DQUO, COMBO_END};
 const uint16_t PROGMEM combo_tf[]        = {KC_T, KC_F, COMBO_END};
+const uint16_t PROGMEM combo_cap_i[]     = {KC_E, KC_I, COMBO_END};
 // quick access to symbols
 const uint16_t PROGMEM combo_colon[]     = {KC_DOT, KC_SLSH, COMBO_END};
 const uint16_t PROGMEM combo_quest[]     = {KC_DOT, KC_DQUO, COMBO_END};
@@ -149,6 +151,7 @@ combo_t key_combos[] = {
     [COMBO_SCH] =        COMBO_ACTION(combo_sch),
     [COMBO_DCOM] =       COMBO_ACTION(combo_dotcom),
     [COMBO_TF] =         COMBO_ACTION(combo_tf),
+    [COMBO_CAP_I] =      COMBO_ACTION(combo_cap_i),
 
     // quick access to symbols
     [COMBO_COLON] =      COMBO(combo_colon, KC_COLON),
@@ -302,6 +305,8 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
       break;
     case COMBO_TF:
       send_string("terraform");
+    case COMBO_CAP_I:
+      send_string("I ");
       break;
     case COMBO_THE:
       tap_code(KC_T);
