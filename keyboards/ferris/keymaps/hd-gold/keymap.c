@@ -402,7 +402,8 @@ struct adaptive_key adaptive_keys[] = {
   {KC_U, KC_H, KC_A},       // UH -> UA
   {KC_J, KC_G, KC_G, KC_S}, // JG -> GS
   {KC_O, KC_H, KC_E},       // OH -> OE
-  {KC_W, KC_C, KC_N}        // WC -> WN
+  {KC_W, KC_C, KC_N},       // WC -> WN
+  {KC_D, KC_N, KC_W, KC_N}, // DN -> WN
 };
 
 // Runs constantly in the background, in a loop
