@@ -14,9 +14,9 @@
 // shift focus left screen
 #define AM_LEFT   LSA(KC_H)
 // shift focus to next window
-#define AM_NEXT   LSA(KC_J)
+#define AM_NEXT   C(S(KC_J))
 // shift focus to previous window
-#define AM_PREV   LSA(KC_K)
+#define AM_PREV   C(S(KC_K))
 
 // throw window to right window?
 #define AM_WRIGHT MEH(KC_E)
@@ -404,6 +404,7 @@ struct adaptive_key adaptive_keys[] = {
   {KC_O, KC_H, KC_E},       // OH -> OE
   {KC_W, KC_C, KC_N},       // WC -> WN
   {KC_D, KC_N, KC_W, KC_N}, // DN -> WN
+  {KC_G, KC_J, KC_S},       // GJ -> GS. Saves same finger jump for words like things. Note that 'g' and 's' both use the left ring finger
 };
 
 // Runs constantly in the background, in a loop
@@ -521,7 +522,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   // the first.
   // https://github.com/qmk/qmk_firmware/pull/16174/files#diff-672a8ea472d262ce7418eb0f66ff85de34f764b9725e4da8d9b98e1cccaf0a16R23
   // this implementation claims to have resolved those issues. Maybe switch
-  // to this instead?
+  // to this instead? Or at least determine how it impliments the behavior differently
   update_oneshot(&os_shft_state, KC_LSFT, OS_SHFT, keycode, record);
   update_oneshot(&os_ctrl_state, KC_LCTL, OS_CTRL, keycode, record);
   update_oneshot(&os_opt_state,  KC_LOPT, OS_OPT,  keycode, record);
