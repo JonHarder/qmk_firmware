@@ -557,33 +557,35 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     /*   break; */
     case KC_LPRN:
       // paren is supercharged here, handling left paren, left curly brace, and
-      // left (square) brace. KC_LPRN (no mods), KC_LCBR (shifted), and KC_LBRC (alt-ed) respectively.
+      // left (square) brace. KC_LPRN (no mods), KC_LCBR (shifted), and KC_LBRC (ctrl-ed) respectively.
       // We don't acually need to tap any of the keys however because of qmk magic.
       // We don't use cmd as a modifier for switching paren behavior so that it is still available for
       // modded parans (cmd-{ specifically)
       // I wish I knew why this was the case....but hey, it works.
       if (shifted) { // shift ( = {
-	unregister_mods(MOD_MASK_SA);
-	register_linger_key(KC_LCBR);
-	return_state = false;
-      } else if (saved_mods & MOD_MASK_ALT) { // cmd ( = [
-	unregister_mods(MOD_MASK_SA);
-	register_linger_key(KC_LBRC);
-	return_state = false;
+	        unregister_mods(MOD_MASK_CS);
+	        register_linger_key(KC_LCBR);
+	        return_state = false;
+      } else if (saved_mods & MOD_MASK_CTRL) { // ctl ( = [
+	        unregister_mods(MOD_MASK_CS);
+	        register_linger_key(KC_LBRC);
+	        return_state = false;
       } else {
-	register_linger_key(KC_LPRN);
-	return_state = false;
+	        register_linger_key(KC_LPRN);
+	        return_state = false;
       }
       break;
     case KC_RPRN:
-      if (shifted) {
-	unregister_mods(MOD_MASK_SA);
-	tap_code16(KC_RCBR);
-	return_state = false;
-      } else if (saved_mods & MOD_MASK_ALT) {
-	unregister_mods(MOD_MASK_SA);
-	tap_code16(KC_RBRC);
-	return_state = false;
+        if (shifted) {
+	          unregister_mods(MOD_MASK_CS);
+	          tap_code16(KC_RCBR);
+	          return_state = false;
+        } else if (saved_mods & MOD_MASK_CTRL) {
+	         unregister_mods(MOD_MASK_CS);
+	         tap_code16(KC_RBRC);
+	         return_state = false;
+        }
+        break;
       }
       break;
     case KC_GRV:
