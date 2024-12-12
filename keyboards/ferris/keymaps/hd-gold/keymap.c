@@ -64,6 +64,7 @@ enum combo_events {
     COMBO_THE,
     COMBO_AND,
     COMBO_SCH,
+    COMBO_SQL,
     COMBO_DCOM, // sends .com
     COMBO_TF, // sends "terraform"
     COMBO_CAP_I,
@@ -116,6 +117,7 @@ const uint16_t PROGMEM combo_cd[]        = {KC_C, KC_N, COMBO_END};
 const uint16_t PROGMEM combo_the[]       = {KC_S, KC_N, KC_D, COMBO_END};
 const uint16_t PROGMEM combo_and[]       = {KC_A, KC_E, KC_I, COMBO_END};
 const uint16_t PROGMEM combo_sch[]       = {KC_F, KC_L, KC_C, COMBO_END};
+const uint16_t PROGMEM combo_sql[]       = {KC_G, KC_M, KC_P, COMBO_END};
 const uint16_t PROGMEM combo_dotcom[]    = {KC_DOT, KC_SLSH, KC_DQUO, COMBO_END};
 const uint16_t PROGMEM combo_tf[]        = {KC_T, KC_F, COMBO_END};
 const uint16_t PROGMEM combo_cap_i[]     = {KC_E, KC_I, COMBO_END};
@@ -149,6 +151,7 @@ combo_t key_combos[] = {
     [COMBO_THE] =        COMBO_ACTION(combo_the),
     [COMBO_AND] =        COMBO_ACTION(combo_and),
     [COMBO_SCH] =        COMBO_ACTION(combo_sch),
+    [COMBO_SQL] =        COMBO_ACTION(combo_sql),
     [COMBO_DCOM] =       COMBO_ACTION(combo_dotcom),
     [COMBO_TF] =         COMBO_ACTION(combo_tf),
     [COMBO_CAP_I] =      COMBO_ACTION(combo_cap_i),
@@ -333,6 +336,11 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
 	unregister_mods(MOD_MASK_SHIFT);
       }
       send_string("ch");
+      break;
+    case COMBO_SQL:
+      tap_code(KC_S);
+      tap_code(KC_Q);
+      tap_code(KC_L);
       break;
     case COMBO_TH:
       tap_code(KC_T);
