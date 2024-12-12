@@ -192,38 +192,36 @@ enum ferris_layers { _BSE, _NAV, _SYM, _NUM, _OSH };
 
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-        [_BSE] = LAYOUT_split_3x5_2( /* Base layer */
-		KC_J,      KC_G,      KC_M,    KC_P,    KC_V,       KC_SCLN,  KC_DOT,  KC_SLSH,  KC_DQUO,   KC_QUOT,
-		KC_R,      KC_S,      KC_N,    KC_D,    KC_B,       KC_COMM,  KC_A,    KC_E,     KC_I,      KC_H,
-		KC_X,      KC_F,      KC_L,    KC_C,    KC_W,       KC_UNDS,  KC_U,    KC_O,     KC_Y,      KC_K,
+  [_BSE] = LAYOUT_split_3x5_2( /* Base layer */
+    KC_J,      KC_G,      KC_M,    KC_P,    KC_V,       KC_SCLN,  KC_DOT,  KC_SLSH,  KC_DQUO,   KC_QUOT,
+    KC_R,      KC_S,      KC_N,    KC_D,    KC_B,       KC_COMM,  KC_A,    KC_E,     KC_I,      KC_H,
+    KC_X,      KC_F,      KC_L,    KC_C,    KC_W,       KC_UNDS,  KC_U,    KC_O,     KC_Y,      KC_K,
 		                               LA_NAV,  KC_T,       KC_SPC,   LA_SYM
 	),
-	[_NAV] = LAYOUT_split_3x5_2( /* Navigation */
-		SW_WIN,    C(KC_SPC), KC_MPRV, KC_MNXT, KC_VOLU,    AM_WLEFT, DK_LEFT, DK_RIGHT, AM_WRIGHT, KC_NO,
-		OS_CTRL,   OS_OPT,    OS_CMD,  OS_SHFT, KC_VOLD,    KC_LEFT,  KC_DOWN, KC_UP,    KC_RGHT,   KC_BSPC,
-		OSL(_OSH), COPY,      PASTE,   C(KC_C), KC_MPLY,    AM_LEFT,  AM_NEXT, AM_PREV,  AM_RIGHT,  BSWORD,
-		                               _______, _______,    KC_TAB,   _______
-		/*                             LA_NAV                                                          */
-	),
-	[_SYM] = LAYOUT_split_3x5_2( /* Symbols */
-                KC_CIRC,   KC_PERC,   KC_EQL,  KC_GT,   KC_TILD,    KC_NO,    KC_NO,   KC_NO,    KC_NO,   KC_NO,
-		KC_MINS,   KC_PLUS,   KC_LPRN, KC_RPRN, KC_DLR,     KC_NO,    OS_SHFT, OS_CMD,   OS_OPT,  OS_CTRL,
-		KC_AT,     KC_PIPE,   KC_HASH, KC_LT,   KC_GRV,     KC_NO,    KC_HOME, KC_END,   KC_CAPP, KC_NO,
-		                               _______, KC_SPC,     _______, _______
-		/*                                                           LA_SYM                             */
-        ),
-	[_NUM] = LAYOUT_split_3x5_2(
-                KC_TRNS,  KC_PERC,    KC_EQL,  KC_TRNS, KC_TRNS,     KC_TRNS,   KC_P7, KC_P8, KC_P9, KC_EQL,
-                OS_CTRL,  OS_OPT,     OS_CMD,  OS_SHFT, KC_TRNS,     KC_TRNS,   KC_P4, KC_P5, KC_P6, KC_BSPC,
-                QK_BOOT,  KC_PDOT,    KC_MINS, KC_COLN, KC_TRNS,     KC_TRNS,   KC_P1, KC_P2, KC_P3, KC_P0,
-                                               _______, _______,     _______, _______
-        ),               /*                             LA_NAV                         LA_SYM                            */
-        [_OSH] = LAYOUT( /* [> One Shot Layer <] */
-          KC_NO,   KC_NO,   KC_NO,  KC_NO,   KC_NO,           KC_NO, KC_F7, KC_F8, KC_F9, KC_F12,
-          OS_CTRL, OS_OPT,  OS_CMD, OS_SHFT, KC_NO,           KC_NO, KC_F4, KC_F5, KC_F6, KC_F11,
-          KC_NO,   KC_NO,   KC_NO,  KC_NO,   KC_NO,           KC_NO, KC_F1, KC_F2, KC_F3, KC_F10,
-                                      _______, _______,          _______, _______
-        )
+  [_NAV] = LAYOUT_split_3x5_2( /* Navigation */
+    SW_WIN,    C(KC_SPC), KC_MPRV, KC_MNXT, KC_VOLU,    AM_WLEFT, DK_LEFT, DK_RIGHT, AM_WRIGHT, KC_NO,
+    OS_CTRL,   OS_OPT,    OS_CMD,  OS_SHFT, KC_VOLD,    KC_LEFT,  KC_DOWN, KC_UP,    KC_RGHT,   KC_BSPC,
+    OSL(_OSH), COPY,      PASTE,   C(KC_C), KC_MPLY,    AM_LEFT,  AM_NEXT, AM_PREV,  AM_RIGHT,  BSWORD,
+                                   _______, _______,    KC_TAB,   _______
+  ),/*                             LA_NAV                                                          */
+  [_SYM] = LAYOUT_split_3x5_2( /* Symbols */
+    KC_CIRC,   KC_PERC,   KC_EQL,  KC_GT,   KC_TILD,    KC_NO,    KC_NO,   KC_NO,    KC_NO,   KC_NO,
+    KC_MINS,   KC_PLUS,   KC_LPRN, KC_RPRN, KC_DLR,     KC_NO,    OS_SHFT, OS_CMD,   OS_OPT,  OS_CTRL,
+    KC_AT,     KC_PIPE,   KC_HASH, KC_LT,   KC_GRV,     KC_NO,    KC_HOME, KC_END,   KC_CAPP, KC_NO,
+                                   _______, KC_SPC,     _______, _______
+  ), /*                                                          LA_SYM                             */
+  [_NUM] = LAYOUT_split_3x5_2(
+    KC_TRNS,  KC_PERC,    KC_EQL,  KC_TRNS, KC_TRNS,     KC_TRNS,   KC_P7, KC_P8, KC_P9, KC_EQL,
+    OS_CTRL,  OS_OPT,     OS_CMD,  OS_SHFT, KC_TRNS,     KC_TRNS,   KC_P4, KC_P5, KC_P6, KC_BSPC,
+    QK_BOOT,  KC_PDOT,    KC_MINS, KC_COLN, KC_TRNS,     KC_TRNS,   KC_P1, KC_P2, KC_P3, KC_P0,
+                                   _______, _______,     _______, _______
+  ),/*                             LA_NAV                         LA_SYM                            */
+  [_OSH] = LAYOUT( /* [> One Shot Layer <] */
+    KC_NO,   KC_NO,   KC_NO,  KC_NO,   KC_NO,           KC_NO, KC_F7, KC_F8, KC_F9, KC_F12,
+    OS_CTRL, OS_OPT,  OS_CMD, OS_SHFT, KC_NO,           KC_NO, KC_F4, KC_F5, KC_F6, KC_F11,
+    KC_NO,   KC_NO,   KC_NO,  KC_NO,   KC_NO,           KC_NO, KC_F1, KC_F2, KC_F3, KC_F10,
+                             _______, _______,          _______, _______
+ )
 };
 
 /* MOD STATE TRACKING */
@@ -586,7 +584,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 	         return_state = false;
         }
         break;
+    case KC_MINS:
+      // I have a dedicated underscore key, so I don't want shifted KC_DASH to output underscore instead
+      // NOTE: this does not accomplish what I want. I think the keycode KC_UNDS gets sent through here
+      // before I ever get a chance to intercept.
+      if(shifted) {
+          tap_code(KC_MINS);
+      } else {
+	        tap_code(KC_MINS);
       }
+      return_state = false;
       break;
     case KC_GRV:
       register_linger_key(KC_GRV);
