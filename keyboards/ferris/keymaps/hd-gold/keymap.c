@@ -45,8 +45,7 @@ enum combo_events {
     COMBO_Q,
     COMBO_QU,
     COMBO_ESC,
-    COMBO_RET,
-    COMBO_DEL,
+   COMBO_DEL,
     // single letter outputs
     COMBO_REPEAT,
     // combo actions (multi-key combos)
@@ -126,7 +125,6 @@ const uint16_t PROGMEM combo_ampr[]  = {KC_DOT, KC_QUOT, COMBO_END};
 // macros
 const uint16_t PROGMEM combo_caps_word[] = {KC_D, KC_A, COMBO_END};
 const uint16_t PROGMEM combo_esc[]       = {KC_R, KC_S, COMBO_END};
-const uint16_t PROGMEM combo_ret[]       = {KC_Y, KC_K, COMBO_END};
 
 combo_t key_combos[] = {
     [COMBO_Z]         = COMBO(combo_z, KC_Z),
@@ -134,7 +132,6 @@ combo_t key_combos[] = {
     [COMBO_QU]        = COMBO_ACTION(combo_qu),
     [COMBO_CAPS_WORD] = COMBO(combo_caps_word, CW_TOGG),
     [COMBO_ESC]       = COMBO(combo_esc, KC_ESC),
-    [COMBO_RET]       = COMBO(combo_ret, KC_ENT),
     // combo actions
     [COMBO_TH] = COMBO_ACTION(combo_th),
     [COMBO_CH] = COMBO_ACTION(combo_ch),
@@ -187,9 +184,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    [_SYM] = LAYOUT_split_3x5_2(/* Symbols */
        KC_CIRC,   KC_PERC,  KC_EQL,   KC_GT,   KC_TILD,   KC_NO,    KC_NO,   KC_NO,    KC_NO,     KC_NO,
        KC_MINS,   KC_PLUS,  KC_LPRN,  KC_RPRN, KC_DLR,    KC_NO,    OS_SHFT, OS_CMD,   OS_OPT,    OS_CTRL,
-       KC_AT,     KC_PIPE,  KC_HASH,  KC_LT,   KC_GRV,    KC_NO,    KC_HOME, KC_END,   KC_CAPP,   KC_NO,
+       KC_AT,     KC_PIPE,  KC_HASH,  KC_LT,   KC_GRV,    KC_NO,    KC_HOME, KC_END,   KC_CAPP,   KC_ENTER,
                                       _______, KC_SPC,    _______,  _______
-   ), /*                              LA_SYM                             */
+   ), /*                                                            LA_SYM                            */
    [_NUM] = LAYOUT_split_3x5_2(
        KC_TRNS,   KC_PERC, KC_EQL,    KC_TRNS, KC_TRNS,   KC_TRNS,  KC_P7,   KC_P8,    KC_P9,     KC_EQL,
        OS_CTRL,   OS_OPT,  OS_CMD,    OS_SHFT, KC_TRNS,   KC_TRNS,  KC_P4,   KC_P5,    KC_P6,     KC_BSPC,
@@ -394,7 +391,6 @@ struct adaptive_key adaptive_keys[] = {
     {KC_J, KC_G, KC_G, KC_S}, // JG -> GS
     {KC_O, KC_H, KC_E},       // OH -> OE
     {KC_W, KC_C, KC_N},       // WC -> WN
-    {KC_D, KC_N, KC_W, KC_N}, // DN -> WN
     {KC_G, KC_J, KC_S},       // GJ -> GS. Saves same finger jump for words like things. Note that 'g' and 's' both use the left ring finger
 };
 
