@@ -45,7 +45,7 @@ enum combo_events {
     COMBO_Q,
     COMBO_QU,
     COMBO_ESC,
-   COMBO_DEL,
+    COMBO_DEL,
     // single letter outputs
     COMBO_REPEAT,
     // combo actions (multi-key combos)
