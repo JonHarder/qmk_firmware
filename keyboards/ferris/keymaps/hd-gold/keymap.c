@@ -179,7 +179,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                       LA_NAV,  KC_T,      KC_SPC,   LA_SYM
    ),
    [_NAV] = LAYOUT_split_3x5_2(/* Navigation */
-       SW_WIN,    C(KC_SPC), KC_MPRV, KC_MNXT, KC_VOLU,   KC_NO,    KC_BTN1, KC_BTN2,  KC_WH_D,   KC_WH_U, 
+       SW_WIN,    C(KC_SPC), KC_MPRV, KC_MNXT, KC_VOLU,   KC_NO,    KC_BTN1, KC_BTN2,  KC_WH_U,   KC_WH_D, 
        OS_CTRL,   OS_OPT,    OS_CMD,  OS_SHFT, KC_VOLD,   KC_LEFT,  KC_DOWN, KC_UP,    KC_RGHT,   KC_BSPC,
        OSL(_OSH), COPY,      PASTE,   C(KC_C), KC_MPLY,   KC_MS_L,  KC_MS_D, KC_MS_U,  KC_MS_R,   BSWORD,
                                       _______, _______,   KC_TAB,   _______

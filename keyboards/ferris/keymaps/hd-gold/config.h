@@ -42,3 +42,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define ADAPTIVE_TERM 128
 
 #define EE_HANDS
+
+// MOUSE SETTINGS
+#define MOUSEKEY_INERTIA
+
+#undef MOUSEKEY_TIME_TO_MAX
+#define MOUSEKEY_TIME_TO_MAX 28
+
+#define MOUSEKEY_MAX_SPEED 28
+
+#undef MOUSEKEY_WHEEL_MAX_SPEED
+#define MOUSEKEY_WHEEL_MAX_SPEED 7
+
+#undef MOUSEKEY_DELAY
+#define MOUSEKEY_DELAY 115
