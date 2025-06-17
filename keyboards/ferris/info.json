@@ -18,7 +18,7 @@
         "command": false,
         "console": false,
         "extrakey": true,
-        "mousekey": false,
+        "mousekey": true,
         "nkro": true,
         "rgblight": false,
         "tap_dance": false,
@@ -34,7 +34,7 @@
         ]
     },
     "mouse_key": {
-        "enabled": false
+        "enabled": true
     },
     "pin_compatible": "promicro",
     "split": {

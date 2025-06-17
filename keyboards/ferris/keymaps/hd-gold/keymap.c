@@ -63,7 +63,7 @@ enum combo_events {
     COMBO_SQL,
     COMBO_DCOM, // sends .com
     COMBO_TF,   // sends "terraform"
-    COMBO_CAP_I,
+    COMBO_IVE,
 
     // quick access to symbols
     COMBO_COLON,
@@ -71,6 +71,7 @@ enum combo_events {
     COMBO_ASTR,
     COMBO_EXLM,
     COMBO_AMPR,
+    COMBO_FZF,
 
     // macros
     COMBO_CAPS_WORD,
@@ -115,7 +116,7 @@ const uint16_t PROGMEM combo_sch[]    = {KC_F, KC_L, KC_C, COMBO_END};
 const uint16_t PROGMEM combo_sql[]    = {KC_G, KC_M, KC_P, COMBO_END};
 const uint16_t PROGMEM combo_dotcom[] = {KC_DOT, KC_SLSH, KC_DQUO, COMBO_END};
 const uint16_t PROGMEM combo_tf[]     = {KC_T, KC_F, COMBO_END};
-const uint16_t PROGMEM combo_cap_i[]  = {KC_E, KC_I, COMBO_END};
+const uint16_t PROGMEM combo_ive[]  = {KC_E, KC_I, COMBO_END};
 // quick access to symbols
 const uint16_t PROGMEM combo_colon[] = {KC_DOT, KC_SLSH, COMBO_END};
 const uint16_t PROGMEM combo_quest[] = {KC_DOT, KC_DQUO, COMBO_END};
@@ -125,6 +126,7 @@ const uint16_t PROGMEM combo_ampr[]  = {KC_DOT, KC_QUOT, COMBO_END};
 // macros
 const uint16_t PROGMEM combo_caps_word[] = {KC_D, KC_A, COMBO_END};
 const uint16_t PROGMEM combo_esc[]       = {KC_R, KC_S, COMBO_END};
+const uint16_t PROGMEM combo_fzf[]   = {KC_X, KC_F, COMBO_END};
 
 combo_t key_combos[] = {
     [COMBO_Z]         = COMBO(combo_z, KC_Z),
@@ -147,7 +149,8 @@ combo_t key_combos[] = {
     [COMBO_SQL]   = COMBO_ACTION(combo_sql),
     [COMBO_DCOM]  = COMBO_ACTION(combo_dotcom),
     [COMBO_TF]    = COMBO_ACTION(combo_tf),
-    [COMBO_CAP_I] = COMBO_ACTION(combo_cap_i),
+    [COMBO_IVE] = COMBO_ACTION(combo_ive),
+    [COMBO_FZF]   = COMBO_ACTION(combo_fzf),
 
     // quick access to symbols
     [COMBO_COLON] = COMBO(combo_colon, KC_COLON),
@@ -176,9 +179,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                       LA_NAV,  KC_T,      KC_SPC,   LA_SYM
    ),
    [_NAV] = LAYOUT_split_3x5_2(/* Navigation */
-       SW_WIN,    C(KC_SPC), KC_MPRV, KC_MNXT, KC_VOLU,   AM_WLEFT, DK_LEFT, DK_RIGHT, AM_WRIGHT, KC_NO, 
+       SW_WIN,    C(KC_SPC), KC_MPRV, KC_MNXT, KC_VOLU,   KC_NO,    KC_BTN1, KC_BTN2,  KC_WH_D,   KC_WH_U, 
        OS_CTRL,   OS_OPT,    OS_CMD,  OS_SHFT, KC_VOLD,   KC_LEFT,  KC_DOWN, KC_UP,    KC_RGHT,   KC_BSPC,
-       OSL(_OSH), COPY,      PASTE,   C(KC_C), KC_MPLY,   AM_LEFT,  AM_NEXT, AM_PREV,  AM_RIGHT,  BSWORD,
+       OSL(_OSH), COPY,      PASTE,   C(KC_C), KC_MPLY,   KC_MS_L,  KC_MS_D, KC_MS_U,  KC_MS_R,   BSWORD,
                                       _______, _______,   KC_TAB,   _______
    ), /*                              LA_NAV                                                          */
    [_SYM] = LAYOUT_split_3x5_2(/* Symbols */
@@ -295,8 +298,8 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
                 }
                 send_string("erraform");
                 break;
-            case COMBO_CAP_I:
-                send_string("I ");
+            case COMBO_IVE:
+                send_string("I've ");
                 break;
             case COMBO_THE:
                 tap_code(KC_T);
@@ -372,6 +375,10 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
                     unregister_mods(MOD_MASK_SHIFT);
                 }
                 tap_code(KC_D);
+                break;
+            case COMBO_FZF:
+                send_string("fzf");
+                break;
         }
     }
     if (caps_on) {
