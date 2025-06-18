@@ -19,7 +19,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // Set the mouse settings to a comfortable speed/accuracy trade-off,
 // assuming a screen refresh rate of 60 Htz or higher
 // The default is 50. This makes the mouse ~3 times faster and more accurate
-#define MOUSEKEY_INTERVAL 16
+// MOUSE SETTINGS
+#define MOUSEKEY_INERTIA
+
+#define MOUSEKEY_INTERVAL 12
+#define MOUSEKEY_MOVE_DELTA 10
 // The default is 20. Since we made the mouse about 3 times faster with the previous setting,
 // give it more time to accelerate to max speed to retain precise control over short distances.
 #define MOUSEKEY_TIME_TO_MAX 40
@@ -42,17 +46,3 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define ADAPTIVE_TERM 128
 
 #define EE_HANDS
-
-// MOUSE SETTINGS
-#define MOUSEKEY_INERTIA
-
-#undef MOUSEKEY_TIME_TO_MAX
-#define MOUSEKEY_TIME_TO_MAX 28
-
-#define MOUSEKEY_MAX_SPEED 28
-
-#undef MOUSEKEY_WHEEL_MAX_SPEED
-#define MOUSEKEY_WHEEL_MAX_SPEED 7
-
-#undef MOUSEKEY_DELAY
-#define MOUSEKEY_DELAY 115
