@@ -64,6 +64,7 @@ enum combo_events {
     COMBO_DCOM, // sends .com
     COMBO_TF,   // sends "terraform"
     COMBO_IVE,
+	COMBO_I,
 
     // quick access to symbols
     COMBO_COLON,
@@ -116,7 +117,8 @@ const uint16_t PROGMEM combo_sch[]    = {KC_F, KC_L, KC_C, COMBO_END};
 const uint16_t PROGMEM combo_sql[]    = {KC_G, KC_M, KC_P, COMBO_END};
 const uint16_t PROGMEM combo_dotcom[] = {KC_DOT, KC_SLSH, KC_DQUO, COMBO_END};
 const uint16_t PROGMEM combo_tf[]     = {KC_T, KC_F, COMBO_END};
-const uint16_t PROGMEM combo_ive[]  = {KC_E, KC_I, COMBO_END};
+const uint16_t PROGMEM combo_ive[]    = {KC_E, KC_I, COMBO_END};
+const uint16_t PROGMEM combo_i[]      = {KC_A, KC_E, COMBO_END};
 // quick access to symbols
 const uint16_t PROGMEM combo_colon[] = {KC_DOT, KC_SLSH, COMBO_END};
 const uint16_t PROGMEM combo_quest[] = {KC_DOT, KC_DQUO, COMBO_END};
@@ -149,7 +151,8 @@ combo_t key_combos[] = {
     [COMBO_SQL]   = COMBO_ACTION(combo_sql),
     [COMBO_DCOM]  = COMBO_ACTION(combo_dotcom),
     [COMBO_TF]    = COMBO_ACTION(combo_tf),
-    [COMBO_IVE] = COMBO_ACTION(combo_ive),
+    [COMBO_IVE]   = COMBO_ACTION(combo_ive),
+	[COMBO_I]     = COMBO(combo_i, S(KC_I)),
     [COMBO_FZF]   = COMBO_ACTION(combo_fzf),
 
     // quick access to symbols
