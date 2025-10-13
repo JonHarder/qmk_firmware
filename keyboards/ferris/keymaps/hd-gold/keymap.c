@@ -164,14 +164,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    ),
    [_NAV] = LAYOUT_split_3x5_2(/* Navigation */
        SW_WIN,    C(KC_SPC), KC_MPRV, KC_MNXT, KC_VOLU,   KC_NO,    KC_BTN1, KC_BTN2,  KC_WH_U,   KC_WH_D, 
-       OS_CTRL,   OS_OPT,    OS_CMD,  OS_SHFT, KC_VOLD,   KC_LEFT,  KC_DOWN, KC_UP,    KC_RGHT,   KC_BSPC,
+       OS_CTRL,   OS_OPT,    OS_CMD,  OS_SHFT, KC_VOLD,   KC_LEFT,  KC_DOWN, KC_UP,    KC_RGHT,   KC_NO,
        OSL(_OSH), COPY,      PASTE,   C(KC_C), KC_MPLY,   KC_MS_L,  KC_MS_D, KC_MS_U,  KC_MS_R,   BSWORD,
                                       _______, _______,   KC_TAB,   _______
    ), /*                              LA_NAV                                                          */
    [_SYM] = LAYOUT_split_3x5_2(/* Symbols */
        KC_CIRC,   KC_PERC,  KC_EQL,   KC_GT,   KC_TILD,   KC_NO,    LCMD(KC_MINS), LCMD(KC_EQL),  KC_NO,     KC_NO,
        KC_MINS,   KC_PLUS,  KC_LPRN,  KC_RPRN, KC_DLR,    KC_NO,    OS_SHFT,       OS_CMD,        OS_OPT,    OS_CTRL,
-       KC_AT,     KC_PIPE,  KC_HASH,  KC_LT,   KC_GRV,    KC_NO,    KC_HOME,       KC_END,        KC_CAPP,   KC_ENTER,
+       KC_AT,     KC_PIPE,  KC_HASH,  KC_LT,   KC_GRV,    KC_NO,    KC_HOME,       KC_END,        KC_CAPP,   KC_NO,
                                       _______, KC_SPC,    _______,  _______
    ), /*                                                            LA_SYM                            */
    [_NUM] = LAYOUT_split_3x5_2(
