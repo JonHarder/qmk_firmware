@@ -6,8 +6,8 @@
 
 /* ====== Keybinding macros ===================*/
 // Layer shifts
-#define LA_SYM LT(_SYM, KC_ENTER)
-#define LA_NAV LT(_NAV, KC_BSPC)
+#define LA_SYM MO(_SYM)
+#define LA_NAV MO(_NAV)
 
 // delete a word (for applications that support this keybinding)
 #define BSWORD C(KC_W)
