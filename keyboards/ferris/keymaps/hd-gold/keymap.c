@@ -9,25 +9,6 @@
 #define LA_SYM LT(_SYM, KC_ENTER)
 #define LA_NAV LT(_NAV, KC_BSPC)
 
-// shift focus right screen
-#define AM_RIGHT LSA(KC_L)
-// shift focus left screen
-#define AM_LEFT LSA(KC_H)
-// shift focus to next window
-#define AM_NEXT C(S(KC_J))
-// shift focus to previous window
-#define AM_PREV C(S(KC_K))
-
-// throw window to right window?
-#define AM_WRIGHT MEH(KC_E)
-// throw window to left window?
-#define AM_WLEFT MEH(KC_W)
-
-// move right one desktop
-#define DK_RIGHT C(KC_RIGHT)
-// move left one desktop
-#define DK_LEFT C(KC_LEFT)
-
 // delete a word (for applications that support this keybinding)
 #define BSWORD C(KC_W)
 
