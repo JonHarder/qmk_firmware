@@ -174,7 +174,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
        KC_AT,     KC_PIPE,  KC_HASH,  KC_LT,   KC_GRV,    KC_NO,    KC_HOME,       KC_END,        KC_CAPP,   KC_NO,
                                       _______, KC_SPC,    _______,  _______
    ), /*                                                            LA_SYM                            */
-   [_NUM] = LAYOUT_split_3x5_2(
+   [_NUM] = LAYOUT_split_3x5_2(/* numpad */
        KC_TRNS,   KC_PERC, KC_EQL,    KC_TRNS, KC_TRNS,   KC_TRNS,  KC_7,   KC_8,    KC_9,     KC_EQL,
        OS_CTRL,   OS_OPT,  OS_CMD,    OS_SHFT, KC_TRNS,   KC_TRNS,  KC_4,   KC_5,    KC_6,     KC_BSPC,
        QK_BOOT,   KC_PDOT, KC_MINS,   KC_COLN, KC_TRNS,   KC_TRNS,  KC_1,   KC_2,    KC_3,     KC_0,
