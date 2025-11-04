@@ -10,7 +10,7 @@
 #define LA_NAV MO(_NAV)
 
 // delete a word (for applications that support this keybinding)
-#define BSWORD C(KC_W)
+#define BSWORD A(KC_BSPC)
 
 /* Copy, paste */
 #define COPY G(KC_C)
