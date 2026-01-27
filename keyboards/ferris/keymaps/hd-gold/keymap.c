@@ -102,10 +102,11 @@ const uint16_t PROGMEM combo_ive[]    = {KC_E, KC_I, COMBO_END};
 const uint16_t PROGMEM combo_i[]      = {KC_A, KC_E, COMBO_END};
 // quick access to symbols
 const uint16_t PROGMEM combo_colon[] = {KC_DOT, KC_SLSH, COMBO_END};
-const uint16_t PROGMEM combo_quest[] = {KC_DOT, KC_DQUO, COMBO_END};
-const uint16_t PROGMEM combo_astr[]  = {KC_SLSH, KC_DQUO, COMBO_END};
-const uint16_t PROGMEM combo_exlm[]  = {KC_QUOT, KC_DQUO, COMBO_END};
-const uint16_t PROGMEM combo_ampr[]  = {KC_DOT, KC_QUOT, COMBO_END};
+const uint16_t PROGMEM combo_quest[] = {KC_DOT, KC_QUOT, COMBO_END};
+const uint16_t PROGMEM combo_astr[]  = {KC_SLSH, KC_QUOT, COMBO_END};
+const uint16_t PROGMEM combo_exlm[]  = {KC_QUOT, KC_EQL, COMBO_END};
+const uint16_t PROGMEM combo_ampr[]  = {KC_DOT, KC_EQL, COMBO_END};
+
 // macros
 const uint16_t PROGMEM combo_caps_word[] = {KC_D, KC_A, COMBO_END};
 const uint16_t PROGMEM combo_esc[]       = {KC_R, KC_S, COMBO_END};
@@ -157,21 +158,21 @@ enum ferris_layers { _BSE, _NAV, _SYM, _NUM, _OSH };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_BSE] = LAYOUT_split_3x5_2(/* Base layer */
-        KC_J,     KC_G,      KC_M,    KC_P,    KC_V,      KC_SCLN,  KC_DOT,  KC_SLSH,  KC_DQUO,   KC_QUOT,
+        KC_J,     KC_G,      KC_M,    KC_P,    KC_V,      KC_SCLN,  KC_DOT,  KC_SLSH,  KC_QUOT,   KC_EQL,
         KC_R,     KC_S,      KC_N,    KC_D,    KC_B,      KC_COMM,  KC_A,    KC_E,     KC_I,      KC_H, 
         KC_X,     KC_F,      KC_L,    KC_C,    KC_W,      KC_UNDS,  KC_U,    KC_O,     KC_Y,      KC_K,
                                       LA_NAV,  KC_T,      KC_SPC,   LA_SYM
    ),
    [_NAV] = LAYOUT_split_3x5_2(/* Navigation */
        SW_WIN,    C(KC_SPC), KC_MPRV, KC_MNXT, KC_VOLU,   KC_NO,    KC_BTN1, KC_BTN2,  KC_WH_U,   KC_WH_D, 
-       OS_CTRL,   OS_OPT,    OS_CMD,  OS_SHFT, KC_VOLD,   KC_LEFT,  KC_DOWN, KC_UP,    KC_RGHT,   KC_NO,
+       OS_CTRL,   OS_OPT,    OS_CMD,  OS_SHFT, KC_VOLD,   KC_LEFT,  KC_DOWN, KC_UP,    KC_RGHT,   KC_BSPC,
        OSL(_OSH), COPY,      PASTE,   C(KC_C), KC_MPLY,   KC_MS_L,  KC_MS_D, KC_MS_U,  KC_MS_R,   BSWORD,
                                       _______, _______,   KC_TAB,   _______
    ), /*                              LA_NAV                                                          */
    [_SYM] = LAYOUT_split_3x5_2(/* Symbols */
        KC_CIRC,   KC_PERC,  KC_EQL,   KC_GT,   KC_TILD,   KC_NO,    LCMD(KC_MINS), LCMD(KC_EQL),  KC_NO,     KC_NO,
        KC_MINS,   KC_PLUS,  KC_LPRN,  KC_RPRN, KC_DLR,    KC_NO,    OS_SHFT,       OS_CMD,        OS_OPT,    OS_CTRL,
-       KC_AT,     KC_PIPE,  KC_HASH,  KC_LT,   KC_GRV,    KC_NO,    KC_HOME,       KC_END,        KC_CAPP,   KC_NO,
+       KC_AT,     KC_PIPE,  KC_HASH,  KC_LT,   KC_GRV,    KC_NO,    KC_HOME,       KC_END,        KC_CAPP,   KC_ENTER,
                                       _______, KC_SPC,    _______,  _______
    ), /*                                                            LA_SYM                            */
    [_NUM] = LAYOUT_split_3x5_2(/* numpad */
@@ -579,19 +580,19 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     return_state = false;
                 }
                 break;
-            case KC_QUOT:
-                // just a regular quote
-                if (shifted) {
-                    unregister_mods(MOD_MASK_SHIFT);
-                }
-                register_linger_key(keycode);
-                return_state = false;
-                break;
-            case KC_DQUO:
-                // just a regular double quote
-                register_linger_key(keycode);
-                return_state = false;
-                break;
+            /* case KC_QUOT: */
+            /*     // just a regular quote */
+            /*     if (shifted) { */
+            /*         unregister_mods(MOD_MASK_SHIFT); */
+            /*     } */
+            /*     register_linger_key(keycode); */
+            /*     return_state = false; */
+            /*     break; */
+            /* case KC_DQUO: */
+            /*     // just a regular double quote */
+            /*     register_linger_key(keycode); */
+            /*     return_state = false; */
+            /*     break; */
             case KC_UNDS:
                 if (shifted) {
                     set_mods(saved_mods & ~MOD_MASK_SHIFT);
@@ -624,11 +625,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 unregister_linger_key();
                 return_state = false;
                 break;
-            case KC_QUOT:
-            case KC_DQUO:
-                unregister_linger_key();
-                return_state = false;
-                break;
+            /* case KC_QUOT: */
+            /* case KC_DQUO: */
+            /*     unregister_linger_key(); */
+            /*     return_state = false; */
+            /*     break; */
         }
     }
     return return_state;
