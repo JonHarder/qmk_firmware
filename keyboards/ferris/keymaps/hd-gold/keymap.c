@@ -96,16 +96,16 @@ const uint16_t PROGMEM combo_the[]    = {KC_S, KC_N, KC_D, COMBO_END};
 const uint16_t PROGMEM combo_and[]    = {KC_A, KC_E, KC_I, COMBO_END};
 const uint16_t PROGMEM combo_sch[]    = {KC_F, KC_L, KC_C, COMBO_END};
 const uint16_t PROGMEM combo_sql[]    = {KC_G, KC_M, KC_P, COMBO_END};
-const uint16_t PROGMEM combo_dotcom[] = {KC_DOT, KC_SLSH, KC_DQUO, COMBO_END};
+const uint16_t PROGMEM combo_dotcom[] = {KC_DOT, KC_SLSH, KC_EQL, COMBO_END};
 const uint16_t PROGMEM combo_tf[]     = {KC_T, KC_F, COMBO_END};
 const uint16_t PROGMEM combo_ive[]    = {KC_E, KC_I, COMBO_END};
 const uint16_t PROGMEM combo_i[]      = {KC_A, KC_E, COMBO_END};
 // quick access to symbols
 const uint16_t PROGMEM combo_colon[] = {KC_DOT, KC_SLSH, COMBO_END};
-const uint16_t PROGMEM combo_quest[] = {KC_DOT, KC_QUOT, COMBO_END};
-const uint16_t PROGMEM combo_astr[]  = {KC_SLSH, KC_QUOT, COMBO_END};
+const uint16_t PROGMEM combo_quest[] = {KC_DOT, KC_EQL, COMBO_END};
+const uint16_t PROGMEM combo_astr[]  = {KC_SLSH, KC_EQL, COMBO_END};
 const uint16_t PROGMEM combo_exlm[]  = {KC_QUOT, KC_EQL, COMBO_END};
-const uint16_t PROGMEM combo_ampr[]  = {KC_DOT, KC_EQL, COMBO_END};
+const uint16_t PROGMEM combo_ampr[]  = {KC_DOT, KC_QUOT, COMBO_END};
 
 // macros
 const uint16_t PROGMEM combo_caps_word[] = {KC_D, KC_A, COMBO_END};
@@ -158,9 +158,9 @@ enum ferris_layers { _BSE, _NAV, _SYM, _NUM, _OSH };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_BSE] = LAYOUT_split_3x5_2(/* Base layer */
-        KC_J,     KC_G,      KC_M,    KC_P,    KC_V,      KC_SCLN,  KC_DOT,  KC_SLSH,  KC_QUOT,   KC_EQL,
+        KC_J,     KC_G,      KC_M,    KC_P,    KC_V,      KC_SCLN,  KC_DOT,  KC_SLSH,  KC_EQL,   KC_QUOT,
         KC_R,     KC_S,      KC_N,    KC_D,    KC_B,      KC_COMM,  KC_A,    KC_E,     KC_I,      KC_H, 
-        KC_X,     KC_F,      KC_L,    KC_C,    KC_W,      KC_UNDS,  KC_U,    KC_O,     KC_Y,      KC_K,
+        KC_X,     KC_F,      KC_L,    KC_C,    KC_W,      KC_MINS,  KC_U,    KC_O,     KC_Y,      KC_K,
                                       LA_NAV,  KC_T,      KC_SPC,   LA_SYM
    ),
    [_NAV] = LAYOUT_split_3x5_2(/* Navigation */
@@ -170,11 +170,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                       _______, _______,   KC_TAB,   _______
    ), /*                              LA_NAV                                                          */
    [_SYM] = LAYOUT_split_3x5_2(/* Symbols */
-       KC_CIRC,   KC_PERC,  KC_EQL,   KC_GT,   KC_TILD,   KC_NO,    LCMD(KC_MINS), LCMD(KC_EQL),  KC_NO,     KC_NO,
-       KC_MINS,   KC_PLUS,  KC_LPRN,  KC_RPRN, KC_DLR,    KC_NO,    OS_SHFT,       OS_CMD,        OS_OPT,    OS_CTRL,
-       KC_AT,     KC_PIPE,  KC_HASH,  KC_LT,   KC_GRV,    KC_NO,    KC_HOME,       KC_END,        KC_CAPP,   KC_ENTER,
-                                      _______, KC_SPC,    _______,  _______
-   ), /*                                                            LA_SYM                            */
+       KC_CIRC,   KC_PERC,  KC_LCBR,  KC_RCBR,  KC_TILD,   KC_NO,    LCMD(KC_MINS), LCMD(KC_EQL),  KC_NO,     KC_NO,
+       KC_LT,     KC_GT,    KC_LPRN,  KC_RPRN,  KC_DLR,    KC_NO,    OS_SHFT,       OS_CMD,        OS_OPT,    OS_CTRL,
+       KC_AT,     KC_PIPE,  KC_LBRC,  KC_RBRC,  KC_GRV,    KC_NO,    KC_HOME,       KC_END,        KC_CAPP,   KC_ENTER,
+                                      _______,  KC_HASH,   _______,  _______
+   ), /*                                                             LA_SYM                            */
    [_NUM] = LAYOUT_split_3x5_2(/* numpad */
        KC_TRNS,   KC_PERC, KC_EQL,    KC_TRNS, KC_TRNS,   KC_TRNS,  KC_7,   KC_8,    KC_9,     KC_EQL,
        OS_CTRL,   OS_OPT,  OS_CMD,    OS_SHFT, KC_TRNS,   KC_TRNS,  KC_4,   KC_5,    KC_6,     KC_BSPC,
