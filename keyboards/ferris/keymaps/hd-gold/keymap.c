@@ -411,18 +411,6 @@ void matrix_scan_user(void) {
                 tap_code(KC_GRV);
                 tap_code(KC_UP);
                 break;
-            case KC_LBRC:
-                tap_code(KC_RBRC);
-                tap_code(KC_LEFT);
-                break;
-            case KC_LCBR:
-                tap_code16(KC_RCBR);
-                tap_code(KC_LEFT);
-                break;
-            case KC_LPRN:
-                tap_code16(KC_RPRN);
-                tap_code(KC_LEFT);
-                break;
             case KC_QUOT:
                 tap_code(KC_QUOT);
                 tap_code(KC_LEFT);
@@ -517,52 +505,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (record->event.pressed) {
         if (is_caps_word_on()) add_weak_mods(MOD_BIT(KC_LSFT));
         switch (keycode) {
-            /* case KC_Q: */
-            /*   register_linger_key(keycode); */
-            /*   return_state = false; */
-            /*   break; */
-            case KC_LPRN:
-                // paren is supercharged here, handling left paren, left curly brace, and
-                // left (square) brace. KC_LPRN (no mods), KC_LCBR (shifted), and KC_LBRC (ctrl-ed) respectively.
-                // We don't acually need to tap any of the keys however because of qmk magic.
-                // We don't use cmd as a modifier for switching paren behavior so that it is still available for
-                // modded parans (cmd-{ specifically)
-                // I wish I knew why this was the case....but hey, it works.
-                if (shifted) { // shift ( = {
-                    unregister_mods(MOD_MASK_CS);
-                    register_linger_key(KC_LCBR);
-                    return_state = false;
-                } else if (saved_mods & MOD_MASK_CTRL) { // ctl ( = [
-                    unregister_mods(MOD_MASK_CS);
-                    register_linger_key(KC_LBRC);
-                    return_state = false;
-                } else {
-                    register_linger_key(KC_LPRN);
-                    return_state = false;
-                }
-                break;
-            case KC_RPRN:
-                if (shifted) {
-                    unregister_mods(MOD_MASK_CS);
-                    tap_code16(KC_RCBR);
-                    return_state = false;
-                } else if (saved_mods & MOD_MASK_CTRL) {
-                    unregister_mods(MOD_MASK_CS);
-                    tap_code16(KC_RBRC);
-                    return_state = false;
-                }
-                break;
-            case KC_MINS:
-                // I have a dedicated underscore key, so I don't want shifted KC_DASH to output underscore instead
-                // NOTE: this does not accomplish what I want. I think the keycode KC_UNDS gets sent through here
-                // before I ever get a chance to intercept.
-                if (shifted) {
-                    tap_code(KC_MINS);
-                } else {
-                    tap_code(KC_MINS);
-                }
-                return_state = false;
-                break;
             case KC_GRV:
                 register_linger_key(KC_GRV);
                 return_state = false;
@@ -580,19 +522,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     return_state = false;
                 }
                 break;
-            /* case KC_QUOT: */
-            /*     // just a regular quote */
-            /*     if (shifted) { */
-            /*         unregister_mods(MOD_MASK_SHIFT); */
-            /*     } */
-            /*     register_linger_key(keycode); */
-            /*     return_state = false; */
-            /*     break; */
-            /* case KC_DQUO: */
-            /*     // just a regular double quote */
-            /*     register_linger_key(keycode); */
-            /*     return_state = false; */
-            /*     break; */
             case KC_UNDS:
                 if (shifted) {
                     set_mods(saved_mods & ~MOD_MASK_SHIFT);
@@ -606,11 +535,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         prior_keydown = timer_read();
     } else { // else branch of if (record->event.pressed)
         switch (keycode) {
-            /* case KC_Q: */
-            /*   unregister_code16(keycode); */
-            /*   linger_key = 0; */
-            /*   return_state = false; */
-            /*   break; */
             case KC_LT:
                 unregister_linger_key();
                 return_state = false;
@@ -619,17 +543,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 unregister_linger_key();
                 return_state = false;
                 break;
-            case KC_LBRC:
-            case KC_LCBR:
-            case KC_LPRN:
-                unregister_linger_key();
-                return_state = false;
-                break;
-            /* case KC_QUOT: */
-            /* case KC_DQUO: */
-            /*     unregister_linger_key(); */
-            /*     return_state = false; */
-            /*     break; */
         }
     }
     return return_state;
