@@ -45,10 +45,10 @@ enum combo_events {
     COMBO_DCOM, // sends .com
     COMBO_TF,   // sends "terraform"
     COMBO_IVE,
-	COMBO_I,
-
+    COMBO_I,
     // quick access to symbols
     COMBO_COLON,
+	COMBO_UNDS,
     COMBO_QUEST,
     COMBO_ASTR,
     COMBO_EXLM,
@@ -98,14 +98,14 @@ const uint16_t PROGMEM combo_sch[]    = {KC_F, KC_L, KC_C, COMBO_END};
 const uint16_t PROGMEM combo_sql[]    = {KC_G, KC_M, KC_P, COMBO_END};
 const uint16_t PROGMEM combo_dotcom[] = {KC_DOT, KC_SLSH, KC_EQL, COMBO_END};
 const uint16_t PROGMEM combo_tf[]     = {KC_T, KC_F, COMBO_END};
-const uint16_t PROGMEM combo_ive[]    = {KC_E, KC_I, COMBO_END};
-const uint16_t PROGMEM combo_i[]      = {KC_A, KC_E, COMBO_END};
+const uint16_t PROGMEM combo_i[]      = {KC_E, KC_I, COMBO_END};
 // quick access to symbols
 const uint16_t PROGMEM combo_colon[] = {KC_DOT, KC_SLSH, COMBO_END};
 const uint16_t PROGMEM combo_quest[] = {KC_DOT, KC_EQL, COMBO_END};
 const uint16_t PROGMEM combo_astr[]  = {KC_SLSH, KC_EQL, COMBO_END};
 const uint16_t PROGMEM combo_exlm[]  = {KC_QUOT, KC_EQL, COMBO_END};
 const uint16_t PROGMEM combo_ampr[]  = {KC_DOT, KC_QUOT, COMBO_END};
+const uint16_t PROGMEM combo_unds[]  = {KC_A, KC_E, COMBO_END};
 
 // macros
 const uint16_t PROGMEM combo_caps_word[] = {KC_D, KC_A, COMBO_END};
@@ -127,15 +127,14 @@ combo_t key_combos[] = {
     [COMBO_GH] = COMBO_ACTION(combo_gh),
     [COMBO_CD] = COMBO_ACTION(combo_cd),
     // whole word combos
-    [COMBO_THE]   = COMBO_ACTION(combo_the),
-    [COMBO_AND]   = COMBO_ACTION(combo_and),
-    [COMBO_SCH]   = COMBO_ACTION(combo_sch),
-    [COMBO_SQL]   = COMBO_ACTION(combo_sql),
-    [COMBO_DCOM]  = COMBO_ACTION(combo_dotcom),
-    [COMBO_TF]    = COMBO_ACTION(combo_tf),
-    [COMBO_IVE]   = COMBO_ACTION(combo_ive),
-	[COMBO_I]     = COMBO(combo_i, S(KC_I)),
-    [COMBO_FZF]   = COMBO_ACTION(combo_fzf),
+    [COMBO_THE]  = COMBO_ACTION(combo_the),
+    [COMBO_AND]  = COMBO_ACTION(combo_and),
+    [COMBO_SCH]  = COMBO_ACTION(combo_sch),
+    [COMBO_SQL]  = COMBO_ACTION(combo_sql),
+    [COMBO_DCOM] = COMBO_ACTION(combo_dotcom),
+    [COMBO_TF]   = COMBO_ACTION(combo_tf),
+    [COMBO_I]    = COMBO(combo_i, S(KC_I)),
+    [COMBO_FZF]  = COMBO_ACTION(combo_fzf),
 
     // quick access to symbols
     [COMBO_COLON] = COMBO(combo_colon, KC_COLON),
@@ -143,6 +142,7 @@ combo_t key_combos[] = {
     [COMBO_ASTR]  = COMBO(combo_astr, KC_ASTR),
     [COMBO_EXLM]  = COMBO(combo_exlm, KC_EXLM),
     [COMBO_AMPR]  = COMBO(combo_ampr, KC_AMPR),
+	[COMBO_UNDS]  = COMBO(combo_unds, KC_UNDS),
 };
 
 /* ========= END COMBO EVENTS ================= */
@@ -159,8 +159,8 @@ enum ferris_layers { _BSE, _NAV, _SYM, _NUM, _OSH };
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_BSE] = LAYOUT_split_3x5_2(/* Base layer */
         KC_J,     KC_G,      KC_M,    KC_P,    KC_V,      KC_SCLN,  KC_DOT,  KC_SLSH,  KC_EQL,    KC_QUOT,
-        KC_R,     KC_S,      KC_N,    KC_D,    KC_B,      KC_COMM,  KC_A,    KC_E,     KC_I,      KC_H, 
-        KC_X,     KC_F,      KC_L,    KC_C,    KC_W,      KC_MINS,  KC_U,    KC_O,     KC_Y,      KC_K,
+        KC_R,     KC_S,      KC_N,    KC_D,    KC_B,      KC_MINS,  KC_A,    KC_E,     KC_I,      KC_H, 
+        KC_X,     KC_F,      KC_L,    KC_C,    KC_W,      KC_COMM,  KC_U,    KC_O,     KC_Y,      KC_K,
                                       LA_NAV,  KC_T,      KC_SPC,   LA_SYM
    ),
    [_NAV] = LAYOUT_split_3x5_2(/* Navigation */
@@ -283,9 +283,6 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
                 }
                 send_string("erraform");
                 break;
-            case COMBO_IVE:
-                send_string("I've ");
-                break;
             case COMBO_THE:
                 tap_code(KC_T);
                 if (shifted && !caps_on) {
@@ -372,12 +369,12 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
 }
 
 struct adaptive_key adaptive_keys[] = {
-    {KC_G, KC_M, KC_L},       // GM -> GL
-    {KC_P, KC_M, KC_L},       // PM -> PL
-    {KC_P, KC_V, KC_L, KC_V}, // PV -> LV
-    {KC_B, KC_D, KC_L},       // BD -> BL
-    {KC_D, KC_B, KC_L, KC_B}, // DB -> LB
-    {KC_A, KC_COMM, KC_U},    // A, -> AU
+    {KC_G, KC_M,    KC_L},       // GM -> GL
+    {KC_P, KC_M,    KC_L},       // PM -> PL
+    {KC_P, KC_V,    KC_L, KC_V}, // PV -> LV
+    {KC_B, KC_D,    KC_L},       // BD -> BL
+    {KC_D, KC_B,    KC_L, KC_B}, // DB -> LB
+    {KC_A, KC_MINS, KC_U},    // A, -> AU
     {KC_E, KC_H, KC_O},       // EH -> EO
     {KC_U, KC_H, KC_A},       // UH -> UA
     {KC_J, KC_G, KC_G, KC_S}, // JG -> GS
