@@ -386,41 +386,41 @@ struct adaptive_key adaptive_keys[] = {
 // Runs constantly in the background, in a loop
 // primarily used to handle linger keys.
 void matrix_scan_user(void) {
-    if (linger_key && timer_elapsed(linger_timer) > LINGER_TIME) {
-        saved_mods = get_mods();
-        clear_mods();
-        unregister_mods(MOD_MASK_SHIFT);
-        switch (linger_key) {
-            /* case KC_Q: */
-            /*   tap_code(KC_U); */
-            /*   break; */
-            case KC_LT:
-                tap_code16(KC_GT);
-                tap_code(KC_LEFT);
-                break;
-            case KC_GRV:
-                tap_code(KC_GRV);
-                tap_code(KC_GRV);
-                tap_code(KC_ENTER);
-                tap_code(KC_ENTER);
-                tap_code(KC_GRV);
-                tap_code(KC_GRV);
-                tap_code(KC_GRV);
-                tap_code(KC_UP);
-                break;
-            case KC_QUOT:
-                tap_code(KC_QUOT);
-                tap_code(KC_LEFT);
-                break;
-            case KC_DQUO:
-                tap_code16(KC_DQUO);
-                tap_code(KC_LEFT);
-            default:
-                break;
-        }
-        linger_timer = linger_key = 0; // done lingering
-        set_mods(saved_mods);
-    }
+  if (linger_key && timer_elapsed(linger_timer) > LINGER_TIME) {
+	saved_mods = get_mods();
+	clear_mods();
+	/* unregister_mods(MOD_MASK_SHIFT); */
+	switch (linger_key) {
+	  /* case KC_Q: */
+	  /*   tap_code(KC_U); */
+	  /*   break; */
+	case KC_LT:
+	  tap_code16(KC_GT);
+	  tap_code(KC_LEFT);
+	  break;
+	case KC_GRV:
+	  tap_code(KC_GRV);
+	  tap_code(KC_GRV);
+	  tap_code(KC_ENTER);
+	  tap_code(KC_ENTER);
+	  tap_code(KC_GRV);
+	  tap_code(KC_GRV);
+	  tap_code(KC_GRV);
+	  tap_code(KC_UP);
+	  break;
+	case KC_QUOT:
+	  tap_code(KC_QUOT);
+	  tap_code(KC_LEFT);
+	  break;
+	case KC_DQUO:
+	  tap_code16(KC_DQUO);
+	  tap_code(KC_LEFT);
+	default:
+	  break;
+	}
+	linger_timer = linger_key = 0; // done lingering
+	set_mods(saved_mods);
+  }
 }
 
 /* ADAPTIVE KEYS */
@@ -500,47 +500,47 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     }
 
     if (record->event.pressed) {
-        if (is_caps_word_on()) add_weak_mods(MOD_BIT(KC_LSFT));
-        switch (keycode) {
-            case KC_GRV:
-                register_linger_key(KC_GRV);
-                return_state = false;
-                break;
-                // ( by itself is still (
-            case KC_LT:
-                register_linger_key(keycode);
-                return_state = false;
-                break;
-            case KC_SLSH:
-                if (shifted) {
-                    set_mods(saved_mods & ~MOD_MASK_SHIFT);
-                    tap_code16(KC_BSLS);
-                    set_mods(saved_mods);
-                    return_state = false;
-                }
-                break;
-            case KC_UNDS:
-                if (shifted) {
-                    set_mods(saved_mods & ~MOD_MASK_SHIFT);
-                    tap_code16(KC_MINS);
-                    set_mods(saved_mods);
-                    return_state = false;
-                }
-                break;
-        } // end switch (keycode)
-        prior_keycode = keycode;
-        prior_keydown = timer_read();
+	  if (is_caps_word_on()) add_weak_mods(MOD_BIT(KC_LSFT));
+	  switch (keycode) {
+	  case KC_GRV:
+		register_linger_key(KC_GRV);
+		return_state = false;
+		break;
+		// ( by itself is still (
+	  case KC_LT:
+		register_linger_key(keycode);
+		return_state = false;
+		break;
+	  case KC_SLSH:
+		if (shifted) {
+		  set_mods(saved_mods & ~MOD_MASK_SHIFT);
+		  tap_code16(KC_BSLS);
+		  set_mods(saved_mods);
+		  return_state = false;
+		}
+		break;
+	  case KC_UNDS:
+		if (shifted) {
+		  set_mods(saved_mods & ~MOD_MASK_SHIFT);
+		  tap_code16(KC_MINS);
+		  set_mods(saved_mods);
+		  return_state = false;
+		}
+		break;
+	  } // end switch (keycode)
+	  prior_keycode = keycode;
+	  prior_keydown = timer_read();
     } else { // else branch of if (record->event.pressed)
-        switch (keycode) {
-            case KC_LT:
-                unregister_linger_key();
-                return_state = false;
-                break;
-            case KC_GRV:
-                unregister_linger_key();
-                return_state = false;
-                break;
-        }
+	  switch (keycode) {
+	  case KC_LT:
+		unregister_linger_key();
+		return_state = false;
+		break;
+	  case KC_GRV:
+		unregister_linger_key();
+		return_state = false;
+		break;
+	  }
     }
     return return_state;
 }
