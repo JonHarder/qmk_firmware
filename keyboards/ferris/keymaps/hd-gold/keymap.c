@@ -394,6 +394,10 @@ void matrix_scan_user(void) {
 	  /* case KC_Q: */
 	  /*   tap_code(KC_U); */
 	  /*   break; */
+	case KC_GT:
+	  tap_code16(KC_BSPC);
+	  send_string("->");
+	  break;
 	case KC_LT:
 	  tap_code16(KC_GT);
 	  tap_code(KC_LEFT);
@@ -502,6 +506,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (record->event.pressed) {
 	  if (is_caps_word_on()) add_weak_mods(MOD_BIT(KC_LSFT));
 	  switch (keycode) {
+	  case KC_GT:
+		register_linger_key(KC_GT);
+		return_state = false;
+		break;
 	  case KC_GRV:
 		register_linger_key(KC_GRV);
 		return_state = false;
@@ -532,6 +540,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 	  prior_keydown = timer_read();
     } else { // else branch of if (record->event.pressed)
 	  switch (keycode) {
+	  case KC_GT:
+		unregister_linger_key();
+		return_state = false;
+		break;
 	  case KC_LT:
 		unregister_linger_key();
 		return_state = false;
