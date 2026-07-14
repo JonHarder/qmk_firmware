@@ -98,22 +98,22 @@ const uint16_t PROGMEM combo_q[]  = {KC_J, KC_P, COMBO_END};
 const uint16_t PROGMEM combo_qu[] = {KC_G, KC_P, COMBO_END};
 // const uint16_t PROGMEM combo_repeat[] = {KC_C, KC_S, COMBO_END};
 // Common H digraphs
-const uint16_t PROGMEM combo_th[] = {KC_D, KC_N, COMBO_END};
-const uint16_t PROGMEM combo_ch[] = {KC_S, KC_D, COMBO_END};
-const uint16_t PROGMEM combo_sh[] = {KC_S, KC_N, COMBO_END};
+const uint16_t PROGMEM combo_th[] = {HOME_D, HOME_N, COMBO_END};
+const uint16_t PROGMEM combo_ch[] = {HOME_S, HOME_D, COMBO_END};
+const uint16_t PROGMEM combo_sh[] = {HOME_S, HOME_N, COMBO_END};
 const uint16_t PROGMEM combo_wh[] = {KC_L, KC_C, COMBO_END};
 const uint16_t PROGMEM combo_ph[] = {KC_P, KC_M, COMBO_END};
 const uint16_t PROGMEM combo_gh[] = {KC_G, KC_M, COMBO_END};
 
-const uint16_t PROGMEM combo_cd[] = {KC_C, KC_N, COMBO_END};
+const uint16_t PROGMEM combo_cd[] = {KC_C, HOME_N, COMBO_END};
 // word combos
-const uint16_t PROGMEM combo_the[]    = {KC_S, KC_N, KC_D, COMBO_END};
-const uint16_t PROGMEM combo_and[]    = {KC_A, KC_E, KC_I, COMBO_END};
+const uint16_t PROGMEM combo_the[]    = {HOME_S, HOME_N, HOME_D, COMBO_END};
+const uint16_t PROGMEM combo_and[]    = {HOME_A, HOME_E, HOME_I, COMBO_END};
 const uint16_t PROGMEM combo_sch[]    = {KC_F, KC_L, KC_C, COMBO_END};
 const uint16_t PROGMEM combo_squ[]    = {KC_G, KC_M, KC_P, COMBO_END};
 const uint16_t PROGMEM combo_dotcom[] = {KC_DOT, KC_SLSH, KC_EQL, COMBO_END};
 const uint16_t PROGMEM combo_tf[]     = {KC_T, KC_F, COMBO_END};
-const uint16_t PROGMEM combo_i[]      = {KC_E, KC_I, COMBO_END};
+const uint16_t PROGMEM combo_i[]      = {HOME_E, HOME_I, COMBO_END};
 // quick access to symbols
 const uint16_t PROGMEM combo_colon[] = {KC_DOT, KC_SLSH, COMBO_END};
 const uint16_t PROGMEM combo_quest[] = {KC_DOT, KC_EQL, COMBO_END};
@@ -123,7 +123,7 @@ const uint16_t PROGMEM combo_ampr[]  = {KC_DOT, KC_QUOT, COMBO_END};
 const uint16_t PROGMEM combo_unds[]  = {KC_A, KC_E, COMBO_END};
 
 // macros
-const uint16_t PROGMEM combo_caps_word[] = {KC_D, KC_A, COMBO_END};
+const uint16_t PROGMEM combo_caps_word[] = {HOME_D, HOME_A, COMBO_END};
 const uint16_t PROGMEM combo_esc[]       = {KC_R, KC_S, COMBO_END};
 const uint16_t PROGMEM combo_fzf[]   = {KC_X, KC_F, COMBO_END};
 
