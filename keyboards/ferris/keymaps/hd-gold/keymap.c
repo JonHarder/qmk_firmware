@@ -180,25 +180,25 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    ),
    [_NAV] = LAYOUT_split_3x5_2(/* Navigation */
        SW_WIN,    C(KC_SPC), KC_MPRV, KC_MNXT, KC_VOLU,   KC_NO,    KC_NO,   KC_NO,    KC_NO,   KC_NO, 
-       OS_CTRL,   OS_OPT,    OS_CMD,  OS_SHFT, KC_VOLD,   KC_LEFT,  KC_DOWN, KC_UP,    KC_RGHT, KC_BSPC,
+       KC_NO,     KC_NO,     KC_NO,   KC_NO,   KC_VOLD,   KC_LEFT,  KC_DOWN, KC_UP,    KC_RGHT, KC_BSPC,
        OSL(_OSH), COPY,      PASTE,   C(KC_C), KC_MPLY,   KC_UNDS,  KC_NO,   KC_NO,    KC_NO,   BSWORD,
                                       _______, _______,   KC_TAB,   _______
    ), /*                              LA_NAV                                                          */
    [_SYM] = LAYOUT_split_3x5_2(/* Symbols */
        KC_CIRC,   KC_PERC,  KC_LCBR,  KC_RCBR,  KC_TILD,   KC_NO,    LCMD(KC_MINS), LCMD(KC_EQL),  KC_PLUS,   KC_DQUO,
-       KC_LT,     KC_GT,    KC_LPRN,  KC_RPRN,  KC_DLR,    KC_NO,    OS_SHFT,       OS_CMD,        OS_OPT,    OS_CTRL,
+       KC_LT,     KC_GT,    KC_LPRN,  KC_RPRN,  KC_DLR,    KC_NO,    KC_NO,         KC_NO,         KC_NO,     KC_NO,
        KC_AT,     KC_HASH,  KC_LBRC,  KC_RBRC,  KC_GRV,    KC_NO,    KC_HOME,       KC_END,        KC_CAPP,   KC_ENTER,
                                       _______,  KC_PIPE,   _______,  _______
    ), /*                                                             LA_SYM                            */
    [_NUM] = LAYOUT_split_3x5_2(/* numpad */
        KC_TRNS,   KC_PERC, KC_EQL,    KC_TRNS, KC_TRNS,   KC_TRNS,  KC_7,   KC_8,    KC_9,     KC_EQL,
-       OS_CTRL,   OS_OPT,  OS_CMD,    OS_SHFT, KC_TRNS,   KC_TRNS,  KC_4,   KC_5,    KC_6,     KC_BSPC,
+       KC_NO,     KC_NO,   KC_NO,     KC_NO,   KC_TRNS,   KC_TRNS,  KC_4,   KC_5,    KC_6,     KC_BSPC,
        QK_BOOT,   KC_PDOT, KC_MINS,   KC_COLN, KC_TRNS,   KC_TRNS,  KC_1,   KC_2,    KC_3,     KC_0,
                                       _______, _______,   _______,  _______
    ), /*                              LA_NAV                        LA_SYM                            */
    [_OSH] = LAYOUT(/* [> One Shot Layer <] */
        KC_NO,     KC_NO,   KC_NO,     KC_NO,   KC_NO,     KC_NO,    KC_F7,   KC_F8,    KC_F9,     KC_F12,
-       OS_CTRL,   OS_OPT,  OS_CMD,    OS_SHFT, KC_NO,     KC_NO,    KC_F4,   KC_F5,    KC_F6,     KC_F11,
+       KC_NO,     KC_NO,   KC_NO,     KC_NO,   KC_NO,     KC_NO,    KC_F4,   KC_F5,    KC_F6,     KC_F11,
        KC_NO,     KC_NO,   KC_NO,     KC_NO,   KC_NO,     KC_NO,    KC_F1,   KC_F2,    KC_F3,     KC_F10,
                                       _______, _______,   _______,  _______
 )};
@@ -499,12 +499,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     // https://github.com/qmk/qmk_firmware/pull/16174/files#diff-672a8ea472d262ce7418eb0f66ff85de34f764b9725e4da8d9b98e1cccaf0a16R23
     // this implementation claims to have resolved those issues. Maybe switch
     // to this instead? Or at least determine how it impliments the behavior differently
-    update_oneshot(&os_shft_state, KC_LSFT, OS_SHFT, keycode, record);
-    update_oneshot(&os_ctrl_state, KC_LCTL, OS_CTRL, keycode, record);
-    update_oneshot(&os_opt_state, KC_LOPT, OS_OPT, keycode, record);
-    update_oneshot(&os_cmd_state, KC_LCMD, OS_CMD, keycode, record);
+    // update_oneshot(&os_shft_state, KC_LSFT, OS_SHFT, keycode, record);
+    /* update_oneshot(&os_ctrl_state, KC_LCTL, OS_CTRL, keycode, record); */
+    /* update_oneshot(&os_opt_state, KC_LOPT, OS_OPT, keycode, record); */
+    /* update_oneshot(&os_cmd_state, KC_LCMD, OS_CMD, keycode, record); */
 
-    saved_mods        = get_mods() | get_oneshot_mods() | get_weak_mods();
+    saved_mods        = get_mods() | /* get_oneshot_mods() | */ get_weak_mods();
     bool shifted      = saved_mods & MOD_MASK_SHIFT;
     bool return_state = true;
 
