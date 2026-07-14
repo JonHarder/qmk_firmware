@@ -20,6 +20,21 @@
 #define KC_CAPP LGUI(LSFT(KC_4))
 /* ============================================ */
 
+/* ========= HOME ROW MODS ALIASES ============*/
+// Left hand home row mods
+#define HOME_R LCTL_T(KC_R)
+#define HOME_S LALT_T(KC_S)
+#define HOME_N LGUI_T(KC_N)
+#define HOME_D LSFT_T(KC_D)
+
+// right hand home row mods
+#define HOME_A RSFT_T(KC_A)
+#define HOME_E RGUI_T(KC_E)
+#define HOME_I RALT_T(KC_I)
+#define HOME_H RCTL_T(KC_H)
+
+/* ============================================*/
+
 /* ========= COMBO ENVETS ===================== */
 enum combo_events {
     COMBO_Z,
@@ -159,7 +174,7 @@ enum ferris_layers { _BSE, _NAV, _SYM, _NUM, _OSH };
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_BSE] = LAYOUT_split_3x5_2(/* Base layer */
         KC_J,     KC_G,      KC_M,    KC_P,    KC_V,      KC_SCLN,  KC_DOT,  KC_SLSH,  KC_EQL,    KC_QUOT,
-        KC_R,     KC_S,      KC_N,    KC_D,    KC_B,      KC_MINS,  KC_A,    KC_E,     KC_I,      KC_H, 
+        HOME_R,   HOME_S,    HOME_N,  HOME_D,  KC_B,      KC_MINS,  HOME_A,  HOME_E,   HOME_I,    HOME_H, 
         KC_X,     KC_F,      KC_L,    KC_C,    KC_W,      KC_COMM,  KC_U,    KC_O,     KC_Y,      KC_K,
                                       LA_NAV,  KC_T,      KC_SPC,   LA_SYM
    ),
