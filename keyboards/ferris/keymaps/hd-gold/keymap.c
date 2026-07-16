@@ -353,18 +353,18 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
 }
 
 struct adaptive_key adaptive_keys[] = {
-    {KC_G, KC_M,    KC_L},       // GM -> GL
-    {KC_P, KC_M,    KC_L},       // PM -> PL
-    {KC_P, KC_V,    KC_L, KC_V}, // PV -> LV
-    {KC_B, KC_D,    KC_L},       // BD -> BL
-    {KC_D, KC_B,    KC_L, KC_B}, // DB -> LB
-    {KC_A, KC_MINS, KC_U},    // A, -> AU
-    {KC_E, KC_H, KC_O},       // EH -> EO
-    {KC_U, KC_H, KC_A},       // UH -> UA
-    {KC_J, KC_G, KC_G, KC_S}, // JG -> GS
-    {KC_O, KC_H, KC_E},       // OH -> OE
-    {KC_W, KC_C, KC_N},       // WC -> WN
-    {KC_G, KC_J, KC_S},       // GJ -> GS. Saves same finger jump for words like things. Note that 'g' and 's' both use the left ring finger
+    {KC_G,    KC_M,    KC_L},       // GM -> GL
+    {KC_P,    KC_M,    KC_L},       // PM -> PL
+    {KC_P,    KC_V,    KC_L, KC_V}, // PV -> LV
+    {KC_B,    KC_D,    KC_L},       // BD -> BL
+    {KC_D,    KC_B,    KC_L, KC_B}, // DB -> LB
+    {HOME_A,  KC_MINS, KC_U},    // A, -> AU
+    {HOME_E,  HOME_H, KC_O},       // EH -> EO
+    {KC_HOME, KC_HOME, KC_A},       // UH -> UA
+    {KC_J,    KC_G, KC_G, KC_S}, // JG -> GS
+    {KC_O,    HOME_H,  KC_E},       // OH -> OE
+    {KC_W,    KC_C,    KC_N},       // WC -> WN
+    {KC_G,    KC_J,    KC_S},       // GJ -> GS. Saves same finger jump for words like things. Note that 'g' and 's' both use the left ring finger
 };
 
 // Runs constantly in the background, in a loop
