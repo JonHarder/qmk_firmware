@@ -1,6 +1,5 @@
 #include QMK_KEYBOARD_H
 
-#include "oneshot.h"
 #include "swapper.h"
 #include "features/sentence_case.h"
 
@@ -165,7 +164,7 @@ combo_t key_combos[] = {
 /* ======== Custom keycodes =================== */
 // TODO: refactor uses of COMBO_ACTION to just use custom
 // keycodes instead and process in `process_record_user`
-enum custom_keycodes { VRSN = SAFE_RANGE, M_THIS, REPEAT, OS_SHFT, OS_CTRL, OS_OPT, OS_CMD, ILL, IVE, SW_WIN, SW_LANG };
+enum custom_keycodes { VRSN = SAFE_RANGE, M_THIS, REPEAT, ILL, IVE, SW_WIN, SW_LANG };
 /* ============================================ */
 
 /* ====== LAYERS ============================*/
@@ -225,39 +224,9 @@ uint32_t linger_timer = 0;
 
 /* END MOD STATE TRACKING */
 
-/* ONESHOT SETUP */
-oneshot_state os_shft_state = os_up_unqueued;
-oneshot_state os_ctrl_state = os_up_unqueued;
-oneshot_state os_opt_state  = os_up_unqueued;
-oneshot_state os_cmd_state  = os_up_unqueued;
-
 bool sw_win_active  = false;
 bool sw_lang_active = false;
 
-bool is_oneshot_cancel_key(uint16_t keycode) {
-    switch (keycode) {
-        case LA_SYM:
-        case LA_NAV:
-            return true;
-        default:
-            return false;
-    }
-}
-
-bool is_oneshot_ignored_key(uint16_t keycode) {
-    switch (keycode) {
-        case LA_SYM:
-        case LA_NAV:
-        case KC_LSFT:
-        case OS_SHFT:
-        case OS_CTRL:
-        case OS_OPT:
-        case OS_CMD:
-            return true;
-        default:
-            return false;
-    }
-}
 
 /* END ONSHOT SETUP */
 bool semantic_shift = false;
@@ -493,18 +462,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     update_swapper(&sw_win_active, KC_LGUI, KC_TAB, SW_WIN, keycode, record);
     update_swapper(&sw_lang_active, KC_LCTL, KC_SPC, SW_LANG, keycode, record);
 
-    // FIXME: seems to be a bug somewhere in here. When typing quickly,
-    // the second letter of typed will often get capitalized as well as
-    // the first.
-    // https://github.com/qmk/qmk_firmware/pull/16174/files#diff-672a8ea472d262ce7418eb0f66ff85de34f764b9725e4da8d9b98e1cccaf0a16R23
-    // this implementation claims to have resolved those issues. Maybe switch
-    // to this instead? Or at least determine how it impliments the behavior differently
-    // update_oneshot(&os_shft_state, KC_LSFT, OS_SHFT, keycode, record);
-    /* update_oneshot(&os_ctrl_state, KC_LCTL, OS_CTRL, keycode, record); */
-    /* update_oneshot(&os_opt_state, KC_LOPT, OS_OPT, keycode, record); */
-    /* update_oneshot(&os_cmd_state, KC_LCMD, OS_CMD, keycode, record); */
-
-    saved_mods        = get_mods() | /* get_oneshot_mods() | */ get_weak_mods();
+    saved_mods        = get_mods() | get_weak_mods();
     bool shifted      = saved_mods & MOD_MASK_SHIFT;
     bool return_state = true;
 
