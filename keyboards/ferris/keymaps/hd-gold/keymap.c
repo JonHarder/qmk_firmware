@@ -141,13 +141,13 @@ combo_t key_combos[] = {
     [COMBO_GH] = COMBO_ACTION(combo_gh),
     [COMBO_CD] = COMBO_ACTION(combo_cd),
     // whole word combos
-    [COMBO_THE]  = COMBO_ACTION(combo_the),
-    [COMBO_AND]  = COMBO_ACTION(combo_and),
+    // [COMBO_THE]  = COMBO_ACTION(combo_the),
+    // [COMBO_AND]  = COMBO_ACTION(combo_and),
     [COMBO_SCH]  = COMBO_ACTION(combo_sch),
     [COMBO_SQU]  = COMBO_ACTION(combo_squ),
     [COMBO_DCOM] = COMBO_ACTION(combo_dotcom),
     [COMBO_TF]   = COMBO_ACTION(combo_tf),
-    [COMBO_I]    = COMBO(combo_i, S(KC_I)),
+    // [COMBO_I]    = COMBO(combo_i, S(KC_I)),
     [COMBO_FZF]  = COMBO_ACTION(combo_fzf),
 
     // quick access to symbols
@@ -156,7 +156,7 @@ combo_t key_combos[] = {
     [COMBO_ASTR]  = COMBO(combo_astr, KC_ASTR),
     [COMBO_EXLM]  = COMBO(combo_exlm, KC_EXLM),
     [COMBO_AMPR]  = COMBO(combo_ampr, KC_AMPR),
-	[COMBO_UNDS]  = COMBO(combo_unds, KC_UNDS),
+	// [COMBO_UNDS]  = COMBO(combo_unds, KC_UNDS),
 };
 
 /* ========= END COMBO EVENTS ================= */
@@ -267,20 +267,20 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
                 }
                 send_string("erraform");
                 break;
-            case COMBO_THE:
-                tap_code(KC_T);
-                if (shifted && !caps_on) {
-                    unregister_mods(MOD_MASK_SHIFT);
-                }
-                send_string("he ");
-                break;
-            case COMBO_AND:
-                tap_code(KC_A);
-                if (shifted && !caps_on) {
-                    unregister_mods(MOD_MASK_SHIFT);
-                }
-                send_string("nd ");
-                break;
+            /* case COMBO_THE: */
+            /*     tap_code(KC_T); */
+            /*     if (shifted && !caps_on) { */
+            /*         unregister_mods(MOD_MASK_SHIFT); */
+            /*     } */
+            /*     send_string("he "); */
+            /*     break; */
+            /* case COMBO_AND: */
+            /*     tap_code(KC_A); */
+            /*     if (shifted && !caps_on) { */
+            /*         unregister_mods(MOD_MASK_SHIFT); */
+            /*     } */
+            /*     send_string("nd "); */
+            /*     break; */
             case COMBO_SCH:
                 tap_code(KC_S);
                 if (shifted && !caps_on) {
@@ -293,27 +293,27 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
                 tap_code(KC_Q);
                 tap_code(KC_U);
                 break;
-            case COMBO_TH:
-                tap_code(KC_T);
-                if (shifted && !caps_on) {
-                    unregister_mods(MOD_MASK_SHIFT);
-                }
-                tap_code(KC_H);
-                break;
-            case COMBO_CH:
-                tap_code(KC_C);
-                if (shifted && !caps_on) {
-                    unregister_mods(MOD_MASK_SHIFT);
-                }
-                tap_code(KC_H);
-                break;
-            case COMBO_SH:
-                tap_code(KC_S);
-                if (shifted && !caps_on) {
-                    unregister_mods(MOD_MASK_SHIFT);
-                }
-                tap_code(KC_H);
-                break;
+            /* case COMBO_TH: */
+            /*     tap_code(KC_T); */
+            /*     if (shifted && !caps_on) { */
+            /*         unregister_mods(MOD_MASK_SHIFT); */
+            /*     } */
+            /*     tap_code(KC_H); */
+            /*     break; */
+            /* case COMBO_CH: */
+            /*     tap_code(KC_C); */
+            /*     if (shifted && !caps_on) { */
+            /*         unregister_mods(MOD_MASK_SHIFT); */
+            /*     } */
+            /*     tap_code(KC_H); */
+            /*     break; */
+            /* case COMBO_SH: */
+            /*     tap_code(KC_S); */
+            /*     if (shifted && !caps_on) { */
+            /*         unregister_mods(MOD_MASK_SHIFT); */
+            /*     } */
+            /*     tap_code(KC_H); */
+            /*     break; */
             case COMBO_WH:
                 tap_code(KC_W);
                 if (shifted && !caps_on) {
