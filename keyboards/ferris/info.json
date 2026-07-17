@@ -34,7 +34,7 @@
         ]
     },
     "mouse_key": {
-        "enabled": true
+        "enabled": false
     },
     "pin_compatible": "promicro",
     "split": {
