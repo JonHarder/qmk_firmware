@@ -42,7 +42,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define CHORDAL_HOLD     // Constrains holds to opposite-hand combinations.
 #define FLOW_TAP_TERM 150 // Disables holds when typing quickly.
 #define COMBO_TERM 40
-#define QUICK_TAP_TERM 0
+// #define QUICK_TAP_TERM 0
 #define LINGER_TIME TAPPING_TERM * 1.1
 
 #define ADAPTIVE_TERM 128
