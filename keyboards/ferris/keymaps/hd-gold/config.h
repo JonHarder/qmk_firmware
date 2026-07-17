@@ -37,7 +37,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define MOUSEKEY_WHEEL_TIME_TO_MAX 100
 
 // Pick good defaults for enabling homerow modifiers
-#define TAPPING_TERM 175
+#define TAPPING_TERM 165
 #define PERMISSIVE_HOLD  // Triggers mod if you tap another key while holding.
 #define CHORDAL_HOLD     // Constrains holds to opposite-hand combinations.
 #define FLOW_TAP_TERM 150 // Disables holds when typing quickly.
