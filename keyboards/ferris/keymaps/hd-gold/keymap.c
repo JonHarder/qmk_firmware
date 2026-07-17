@@ -356,11 +356,11 @@ struct adaptive_key adaptive_keys[] = {
     {KC_G,    KC_M,    KC_L},       // GM -> GL
     {KC_P,    KC_M,    KC_L},       // PM -> PL
     {KC_P,    KC_V,    KC_L, KC_V}, // PV -> LV
-    {KC_B,    KC_D,    KC_L},       // BD -> BL
-    {KC_D,    KC_B,    KC_L, KC_B}, // DB -> LB
+    {KC_B,    HOME_D,  KC_L},       // BD -> BL
+    {HOME_D,  KC_B,    KC_L, KC_B}, // DB -> LB
     {HOME_A,  KC_MINS, KC_U},    // A, -> AU
     {HOME_E,  HOME_H, KC_O},       // EH -> EO
-    {KC_HOME, KC_HOME, KC_A},       // UH -> UA
+    {KC_U,    HOME_H, KC_A},       // UH -> UA
     {KC_J,    KC_G, KC_G, KC_S}, // JG -> GS
     {KC_O,    HOME_H,  KC_E},       // OH -> OE
     {KC_W,    KC_C,    KC_N},       // WC -> WN
