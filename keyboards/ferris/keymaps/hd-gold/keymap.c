@@ -2,6 +2,7 @@
 
 #include "swapper.h"
 #include "features/sentence_case.h"
+#include "features/adaptive_keys.h"
 
 /* ====== Keybinding macros ===================*/
 // Layer shifts
@@ -76,20 +77,6 @@ enum combo_events {
 };
 uint16_t COMBO_LEN = COMBO_LENGTH;
 
-struct adaptive_key {
-    // The first key in the adaptive key series.
-    uint16_t prior_key;
-    // The second key in the adaptiwe key series.
-    uint16_t current_key;
-    // If there is no `new_key2`, than this key is simply
-    // emitted instead of `current_key`. e.g. 'p m' produces 'p l'.
-    uint16_t new_key1;
-    // If provided, when the adaptive series is emitted, `prior_key`
-    // is deleted (`current_key` was never emitted, only sent to the board)
-    // then `new_key1` and `new_key2` are emitted.
-    // e.g. 'd b' produces '[bspc] l b' or just 'l b'
-    uint16_t new_key2;
-};
 
 // single letter outputs
 const uint16_t PROGMEM combo_z[]  = {KC_J, KC_G, COMBO_END};
@@ -411,53 +398,6 @@ void matrix_scan_user(void) {
   }
 }
 
-/* ADAPTIVE KEYS */
-bool process_adaptive_keys(uint16_t keycode, keyrecord_t *record) {
-    // e.g. does the key still need processing?
-    bool continue_processing = true; // assume we didn't handle the key here.
-
-    if (record->event.pressed) {
-        if ((timer_elapsed(prior_keydown) < ADAPTIVE_TERM)) {
-            saved_mods = get_mods(); //
-            clear_mods();
-            keycode = keycode & 0xFF; // taps&mods handled earlier.
-            if (is_caps_word_on()) {
-                add_weak_mods(MOD_BIT(KC_LSFT));
-            }
-
-            // loop through all available adaptive key configuration
-            for (int i = 0; i < sizeof(adaptive_keys) / sizeof(struct adaptive_key); i++) {
-                // if the previous key and current key match this adaptive key set:
-                if (prior_keycode == adaptive_keys[i].prior_key && keycode == adaptive_keys[i].current_key) {
-                    // some adaptive keys just send a different code for the given `keycode`. These adaptive
-                    // keys will have their `new_key2` set to 0.
-                    // This means we simply send an altered key instead of the one pressed (new_key1)
-                    if (adaptive_keys[i].new_key2 == 0) {
-                        tap_code(adaptive_keys[i].new_key1);
-                    } else {
-                        // Other adaptive keys replace the previous key AND the current key.
-                        // We know this by having an adaptive key record with a non-zero `new_key2`
-                        // In these instances, we delete the previous key and send both new keys
-                        // i.e. `new_key1` and `new_key2`.
-                        tap_code(KC_BSPC);
-                        tap_code(adaptive_keys[i].new_key1);
-                        tap_code(adaptive_keys[i].new_key2);
-                    }
-                    // in either case, we have processed this key and so we indicate to the caller
-                    // that no further processing is needed.
-                    continue_processing = false;
-                    break;
-                }
-            }
-            set_mods(saved_mods); // Restore mods
-        }
-        prior_keycode = keycode;      // this keycode is stripped of mods+taps
-        prior_keydown = timer_read(); // (re)start prior_key timing
-    }
-    return continue_processing;
-}
-/* END ADAPTIVE KEYS */
-
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     update_swapper(&sw_win_active, KC_LGUI, KC_TAB, SW_WIN, keycode, record);
     update_swapper(&sw_lang_active, KC_LCTL, KC_SPC, SW_LANG, keycode, record);
@@ -470,7 +410,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         return false;
     }
 
-    if (!process_adaptive_keys(keycode, record)) {
+    if (!process_adaptive_keys(keycode, record, saved_mods, adaptive_keys, ARRAY_SIZE(adaptive_keys))) {
         // This means we already took care of the key
         // and do not need to process it further
         return false;
